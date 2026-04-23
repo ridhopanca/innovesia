@@ -17,18 +17,22 @@ Route::post('/contact', [\App\Http\Controllers\PageController::class, 'submitCon
 // Article Detail Route - matches any article slug pattern
 Route::get('/artikel/{slug}', [\App\Http\Controllers\PageController::class, 'articleDetail'])->name('article.detail');
 
-// Auth Routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/update-profile', [AuthController::class, 'showUpdateProfile']);
     Route::put('/update-profile', [AuthController::class, 'updateProfile']);
 });
 
-// Admin Routes
+// Admin Auth Routes (no auth required)
+Route::prefix('cms')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+// Admin Routes (auth required)
 Route::prefix('cms')->middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/', [\App\Http\Controllers\Admin\PageController::class, 'index']);
     Route::get('/pages/{slug}', [\App\Http\Controllers\Admin\PageController::class, 'edit']);
 
