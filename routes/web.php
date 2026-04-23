@@ -10,6 +10,10 @@ Route::get('/portfolio', [\App\Http\Controllers\PageController::class, 'show'])-
 Route::get('/articles', [\App\Http\Controllers\PageController::class, 'show'])->defaults('slug', 'articles')->name('articles');
 Route::get('/community', [\App\Http\Controllers\PageController::class, 'show'])->defaults('slug', 'community')->name('community');
 
+// Contact Page Routes
+Route::get('/contact', [\App\Http\Controllers\PageController::class, 'contact'])->name('contact');
+Route::post('/contact', [\App\Http\Controllers\PageController::class, 'submitContact'])->name('contact.submit');
+
 // Article Detail Route - matches any article slug pattern
 Route::get('/artikel/{slug}', [\App\Http\Controllers\PageController::class, 'articleDetail'])->name('article.detail');
 

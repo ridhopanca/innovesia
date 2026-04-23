@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
 class PageController extends Controller
@@ -123,5 +124,60 @@ class PageController extends Controller
         ];
 
         return view('pages.article-detail', compact('page', 'data'));
+    }
+
+    /**
+     * Show contact page with form
+     */
+    public function contact()
+    {
+        return view('pages.contact', [
+            'title' => 'Contact Us - Innovesia'
+        ]);
+    }
+
+    /**
+     * Handle contact form submission
+     * TODO: Integrate with Google Sheets API to store submissions
+     */
+    public function submitContact(Request $request)
+    {
+        // Validate form data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:20',
+            'company' => 'nullable|string|max:255',
+            'subject' => 'required|string|max:100',
+            'message' => 'required|string|max:5000',
+            'website' => 'nullable|string|max:255', // Honeypot field
+        ]);
+
+        // Honeypot check - if filled, it's likely spam
+        if (!empty($validated['website'])) {
+            return back()->with('success', 'Thank you for your message!');
+        }
+
+        // TODO: Send data to Google Sheets
+        // Google Sheets Integration Steps:
+        // 1. Create Google Cloud Project & enable Google Sheets API
+        // 2. Create Service Account and download JSON credentials
+        // 3. Share Google Sheet with service account email
+        // 4. Use google/apiclient package to append data
+        //
+        // Example code structure:
+        // $client = new Google_Client();
+        // $client->setAuthConfig(storage_path('google-credentials.json'));
+        // $client->addScope(Google_Service_Sheets::SPREADSHEETS);
+        // $service = new Google_Service_Sheets($client);
+        // $spreadsheetId = 'YOUR_SPREADSHEET_ID';
+        // $range = 'Sheet1!A:G';
+        // $values = [[$validated['name'], $validated['email'], ...]];
+        // $service->spreadsheets_values->append($spreadsheetId, $range, new Google_Service_Sheets_ValueRange(['values' => $values]));
+
+        // TODO: Send notification email (optional)
+        // Mail::to('hello@innovesia.com')->send(new ContactFormMail($validated));
+
+        return back()->with('success', 'Thank you for your message! We will get back to you soon.');
     }
 }

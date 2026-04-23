@@ -48,7 +48,8 @@
             </a>
 
         </div>
-        <button class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-2.5 rounded-xl text-sm font-bold">
+        <a href="{{ route('contact') }}"
+            class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:shadow-lg transition-all">
             Contact Us
-        </button>
+        </a>
 </nav>
