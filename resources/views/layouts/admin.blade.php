@@ -54,7 +54,7 @@
     <div class="h-16 glass-effect border-b border-slate-200 shadow-sm flex items-center px-8 justify-between sticky top-0 z-50">
         <div class="flex items-center gap-3">
             <a href="/cms" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <img src="logo.webp" alt="Innovesia" class="h-14 -mt-2.5" />
+                <img src="logo.webp" alt="Innovesia" class="h-14 -mt-1" />
             </a>
         </div>
 
