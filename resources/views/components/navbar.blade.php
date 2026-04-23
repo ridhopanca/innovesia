@@ -1,7 +1,7 @@
 <nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl shadow-sm dark:shadow-none">
     <div class="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
         <a href="{{ route('home') }}" class="text-2xl font-bold tracking-tighter text-blue-950">
-            <img src="logo.webp" alt="Innovesia" class="h-14 -mt-2.5" />
+            <img src="{{asset('logo.webp')}}" alt="Innovesia" class="h-14 -mt-2.5" />
         </a>
         <div class="hidden md:flex items-center gap-8 font-manrope tracking-tight leading-relaxed">
 

@@ -8,18 +8,18 @@
 	<link
 		rel="apple-touch-icon"
 		sizes="180x180"
-		href="apple-touch-icon.png" />
+		href="{{asset('apple-touch-icon.png')}}" />
 	<link
 		rel="icon"
 		type="image/png"
 		sizes="32x32"
-		href="favicon-32x32.png" />
+		href="{{asset('favicon-32x32.png')}}" />
 	<link
 		rel="icon"
 		type="image/png"
 		sizes="16x16"
-		href="favicon-16x16.png" />
-	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+		href="{{asset('favicon-16x16.png')}}" />
+	<link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
 	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@300..700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
 	<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>

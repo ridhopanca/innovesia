@@ -8,18 +8,18 @@
     <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="apple-touch-icon.png" />
+        href="{{asset('apple-touch-icon.png')}}" />
     <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="favicon-32x32.png" />
+        href="{{asset('favicon-32x32.png')}}" />
     <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="favicon-16x16.png" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        href="{{asset('favicon-16x16.png')}}" />
+    <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,7 +54,7 @@
     <div class="h-16 glass-effect border-b border-slate-200 shadow-sm flex items-center px-8 justify-between sticky top-0 z-50">
         <div class="flex items-center gap-3">
             <a href="/cms" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <img src="logo.webp" alt="Innovesia" class="h-14 -mt-1" />
+                <img src="{{ asset('logo.webp') }}" alt="Innovesia" class="h-14 -mt-1" />
             </a>
         </div>
 

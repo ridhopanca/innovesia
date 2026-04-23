@@ -25,9 +25,9 @@
             <!-- Contact -->
             <div>
                 <h3 class="font-bold mb-4 text-primary">Contact</h3>
-                <p class="text-sm text-on-surface-variant">
+                <a href="mailto:hello@innovesia.com" class="text-sm text-on-surface-variant hover:text-primary">
                     hello@innovesia.com
-                </p>
+                </a>
             </div>
 
             <!-- CTA -->
