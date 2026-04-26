@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SectionController extends Controller
 {
@@ -29,6 +30,12 @@ class SectionController extends Controller
         }
 
         $section->save();
+
+        // Invalidate cache for the page this section belongs to
+        $page = $section->page;
+        if ($page) {
+            Cache::forget("page_{$page->slug}");
+        }
 
         return response()->json(['status' => 'ok']);
     }

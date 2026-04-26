@@ -4,19 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 
 class PageController extends Controller
 {
     public function show($slug)
     {
-        $page = Page::where('slug', $slug)->firstOrFail();
+        $cacheKey = "page_{$slug}";
 
-        $sections = $page->sections->mapWithKeys(function ($section) {
-            return [$section->type => $section->content ?? []];
+        $page = Cache::remember($cacheKey, now()->addHours(24), function () use ($slug) {
+            $page = Page::where('slug', $slug)->firstOrFail();
+
+            $sections = $page->sections->mapWithKeys(function ($section) {
+                return [$section->type => $section->content ?? []];
+            });
+
+            return compact('page', 'sections');
         });
 
-        return view('pages.' . $page->template, compact('page', 'sections'));
+        return view('pages.' . $page['page']->template, $page);
     }
 
     public function articleDetail($slug)

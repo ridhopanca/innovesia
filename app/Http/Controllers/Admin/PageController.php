@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PageController extends Controller
 {
@@ -66,6 +67,9 @@ class PageController extends Controller
         $page->status = 'published';
         $page->published_at = now();
         $page->save();
+
+        // Invalidate cache for this page
+        Cache::forget("page_{$slug}");
 
         return back()->with('success', 'Page published');
     }

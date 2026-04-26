@@ -16,7 +16,7 @@ $posts = $data['posts'];
         <!-- Instagram Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6" data-animate="stagger">
             @foreach($posts as $post)
-            <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
+            <a href="{{ $post['link'] ?? '#' }}" target="_blank" rel="noopener noreferrer" class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all block">
                 <div class="aspect-square relative overflow-hidden">
                     <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Instagram post" src="{{ $post['image'] }}" />
                     <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -30,7 +30,7 @@ $posts = $data['posts'];
                         <span>Innovesia ID</span>
                     </div>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
     </div>
