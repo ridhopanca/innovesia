@@ -6,17 +6,17 @@ $projects = $data['projects'] ?? [
 $featured = $projects[0] ?? null;
 $secondary = $projects[1] ?? null;
 @endphp
-<section class="py-32 bg-surface-container-high overflow-hidden">
-    <div class="max-w-7xl mx-auto px-8">
-        <h2 class="text-5xl font-black font-headline text-primary tracking-tighter mb-20 text-center lg:text-left" data-animate="fade-up">{{ $data['title'] ?? 'Strategic Case Studies' }}</h2>
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-10" data-animate="stagger">
+<section class="py-16 md:py-32 bg-surface-container-high overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black font-headline text-primary tracking-tighter mb-12 md:mb-20 text-center lg:text-left" data-animate="fade-up">{{ $data['title'] ?? 'Strategic Case Studies' }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10" data-animate="stagger">
             @if($featured)
             <div class="md:col-span-8 group relative rounded-3xl overflow-hidden aspect-[16/9] shadow-xl">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ $featured['title'] }}" src="{{ $featured['image'] }}" />
                 <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                <div class="absolute bottom-0 left-0 p-10">
-                    <span class="text-white/70 text-xs font-bold font-label tracking-widest uppercase mb-2 block">{{ $featured['category'] }}</span>
-                    <h4 class="text-3xl font-bold text-white font-headline">{{ $featured['title'] }}</h4>
+                <div class="absolute bottom-0 left-0 p-6 md:p-10">
+                    <span class="text-white/70 text-[10px] md:text-xs font-bold font-label tracking-widest uppercase mb-2 block">{{ $featured['category'] }}</span>
+                    <h4 class="text-xl md:text-3xl font-bold text-white font-headline">{{ $featured['title'] }}</h4>
                 </div>
             </div>
             @endif
@@ -24,9 +24,9 @@ $secondary = $projects[1] ?? null;
             <div class="md:col-span-4 group relative rounded-3xl overflow-hidden aspect-[1/1] md:aspect-auto shadow-xl">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="{{ $secondary['title'] }}" src="{{ $secondary['image'] }}" />
                 <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                <div class="absolute bottom-0 left-0 p-8">
-                    <span class="text-white/70 text-xs font-bold font-label tracking-widest uppercase mb-2 block">{{ $secondary['category'] }}</span>
-                    <h4 class="text-xl font-bold text-white font-headline">{{ $secondary['title'] }}</h4>
+                <div class="absolute bottom-0 left-0 p-6 md:p-8">
+                    <span class="text-white/70 text-[10px] md:text-xs font-bold font-label tracking-widest uppercase mb-2 block">{{ $secondary['category'] }}</span>
+                    <h4 class="text-lg md:text-xl font-bold text-white font-headline">{{ $secondary['title'] }}</h4>
                 </div>
             </div>
             @endif

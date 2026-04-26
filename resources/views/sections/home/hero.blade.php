@@ -1,11 +1,11 @@
-<section class="relative min-h-[921px] flex items-center overflow-hidden">
-    <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<section class="relative min-h-[600px] md:min-h-[921px] flex items-center overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
         <div class="lg:col-span-7 z-10" data-animate="fade-up">
             @if(isset($data['badge']))
-            <span class="inline-block px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold tracking-[0.1em] uppercase mb-6 font-label">{{ $data['badge'] }}</span>
+            <span class="inline-block px-3 md:px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold tracking-[0.1em] uppercase mb-4 md:mb-6 font-label">{{ $data['badge'] }}</span>
             @endif
             @if(isset($data['title']))
-            <h1 class="text-6xl md:text-8xl font-black font-headline text-primary tracking-tighter leading-[0.9] mb-8 text-balance">
+            <h1 class="text-4xl md:text-6xl lg:text-8xl font-black font-headline text-primary tracking-tighter leading-[0.9] mb-6 md:mb-8 text-balance">
                 {{ $data['title'] }}
                 @if(isset($data['title_highlight']))
                 <span class="text-on-primary-container">{{ $data['title_highlight'] }}</span>
@@ -13,22 +13,22 @@
             </h1>
             @endif
             @if(isset($data['description']))
-            <p class="text-lg md:text-xl text-on-surface-variant max-w-xl mb-10 leading-relaxed">
+            <p class="text-base md:text-lg md:text-xl text-on-surface-variant max-w-xl mb-8 md:mb-10 leading-relaxed">
                 {{ $data['description'] }}
             </p>
             @endif
             @if(isset($data['primary_button']) || isset($data['secondary_button']))
-            <div class="flex flex-wrap gap-4">
+            <div class="flex flex-wrap gap-3 md:gap-4">
                 @if(isset($data['primary_button']))
                 <a href="{{ route('product') }}">
-                    <button type="button" class="px-8 py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl font-headline font-bold text-lg hover:scale-105 transition-all shadow-xl">
+                    <button type="button" class="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-br from-primary to-primary-container text-white rounded-xl font-headline font-bold text-base md:text-lg hover:scale-105 transition-all shadow-xl">
                         {{ $data['primary_button'] }}
                     </button>
                 </a>
                 @endif
                 @if(isset($data['secondary_button']))
                 <a href="{{ route('portfolio') }}">
-                    <button class="px-8 py-4 border border-outline-variant/30 text-primary rounded-xl font-headline font-bold text-lg hover:bg-surface-container-low transition-all">
+                    <button class="px-6 md:px-8 py-3 md:py-4 border border-outline-variant/30 text-primary rounded-xl font-headline font-bold text-base md:text-lg hover:bg-surface-container-low transition-all">
                         {{ $data['secondary_button'] }}
                     </button>
                 </a>

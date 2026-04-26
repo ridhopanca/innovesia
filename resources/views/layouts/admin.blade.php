@@ -30,6 +30,9 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
+    <!-- TinyMCE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js"></script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -83,7 +86,7 @@
                         <span class="text-sm font-medium">Update Profile</span>
                     </a>
                     <div class="border-t border-slate-100 mt-2 pt-2">
-                        <form method="POST" action="/logout" class="px-4">
+                        <form method="POST" action="/cms/logout" class="px-4">
                             @csrf
                             <button type="submit" class="w-full flex items-center gap-3 py-2 text-red-500 hover:text-red-600 transition-colors">
                                 <span class="material-icons-outlined">logout</span>

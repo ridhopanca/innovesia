@@ -1,12 +1,12 @@
-<section class="relative min-h-[716px] flex items-center overflow-hidden bg-surface py-24">
-    <div class="max-w-7xl mx-auto px-8 w-full">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<section class="relative min-h-[500px] md:min-h-[716px] flex items-center overflow-hidden bg-surface py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
             <div class="lg:col-span-7" data-animate="fade-up">
                 @if(isset($data['badge']))
-                <span class="inline-block px-4 py-1.5 mb-6 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold uppercase tracking-[0.2em] font-label">{{ $data['badge'] }}</span>
+                <span class="inline-block px-3 md:px-4 py-1.5 mb-4 md:mb-6 rounded-full bg-secondary-container text-on-secondary-container text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] font-label">{{ $data['badge'] }}</span>
                 @endif
                 @if(isset($data['title']))
-                <h1 class="text-5xl md:text-7xl font-extrabold font-headline leading-[1.05] tracking-tighter text-primary mb-8">
+                <h1 class="text-3xl md:text-5xl lg:text-7xl font-extrabold font-headline leading-[1.05] tracking-tighter text-primary mb-6 md:mb-8">
                     {{ $data['title'] }}
                     @if(isset($data['title_highlight']))
                     <span class="text-gradient-primary">{{ $data['title_highlight'] }}</span>
@@ -14,7 +14,7 @@
                 </h1>
                 @endif
                 @if(isset($data['description']))
-                <p class="text-xl md:text-2xl text-on-surface-variant max-w-2xl leading-relaxed font-light">
+                <p class="text-base md:text-xl md:text-2xl text-on-surface-variant max-w-2xl leading-relaxed font-light">
                     {{ $data['description'] }}
                 </p>
                 @endif

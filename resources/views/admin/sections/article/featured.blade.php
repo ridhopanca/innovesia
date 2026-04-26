@@ -62,8 +62,8 @@ $isPublished = !empty($section->content);
         <div>
             <label class="text-sm font-semibold text-slate-700 mb-2 block">Full Content</label>
             <textarea name="content"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
-                rows="8" placeholder="Isi lengkap artikel (HTML atau plain text). Default: Lorem ipsum...">{{ $data['content'] ?? '' }}</textarea>
+                class="tinymce-editor w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
+                rows="12" placeholder="Isi lengkap artikel...">{{ $data['content'] ?? '' }}</textarea>
             <p class="text-xs text-slate-400 mt-1">Konten lengkap untuk halaman detail artikel</p>
         </div>
 
@@ -161,5 +161,27 @@ $isPublished = !empty($section->content);
                 slugInput.value = generateSlug(titleInput.value.trim());
             }
         }
+
+        // Initialize TinyMCE for this section
+        tinymce.init({
+            selector: '.tinymce-editor',
+            height: 400,
+            menubar: true,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Inter,sans-serif; font-size:16px }',
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save();
+                });
+            }
+        });
     });
 </script>

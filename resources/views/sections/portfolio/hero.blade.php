@@ -1,5 +1,5 @@
-<section class="max-w-7xl mx-auto px-8 mb-32">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+<section class="max-w-7xl mx-auto px-4 md:px-8 mb-16 md:mb-32">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-end">
         <div class="md:col-span-8" data-animate="fade-up">
             @if(isset($data['badge']))
             <span class="font-label text-[10px] uppercase tracking-[0.2em] text-outline mb-4 block">{{ $data['badge'] }}</span>
@@ -8,7 +8,7 @@
             <span class="font-label text-[10px] uppercase tracking-[0.2em] text-outline mb-4 block">{{ $data['subtitle'] }}</span>
             @endif
             @if(isset($data['title']))
-            <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter text-primary leading-[0.9] mb-8">
+            <h1 class="text-4xl md:text-6xl lg:text-8xl font-extrabold tracking-tighter text-primary leading-[0.9] mb-6 md:mb-8">
                 {{ $data['title'] }}
                 @if(isset($data['title_highlight']))
                 <span class="text-on-primary-container">{{ $data['title_highlight'] }}</span>
@@ -18,7 +18,7 @@
         </div>
         <div class="md:col-span-4 pb-4" data-animate="fade-up">
             @if(isset($data['description']))
-            <p class="text-xl text-on-surface-variant leading-relaxed font-light italic border-l-4 border-primary-container pl-6">
+            <p class="text-base md:text-xl text-on-surface-variant leading-relaxed font-light italic border-l-4 border-primary-container pl-4 md:pl-6">
                 {{ $data['description'] }}
             </p>
             @endif

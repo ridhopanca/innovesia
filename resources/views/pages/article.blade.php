@@ -6,6 +6,5 @@
 @include('sections.article.header', ['data' => $sections['header'] ?? []])
 @include('sections.article.featured', ['data' => $sections['featured'] ?? []])
 @include('sections.article.article', ['data' => $sections['article'] ?? []])
-@include('sections.article.newsletter', ['data' => $sections['newsletter'] ?? []])
 
 @endsection

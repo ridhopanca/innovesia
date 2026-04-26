@@ -8,7 +8,7 @@ $items = $data['items'] ?? [
 @endphp
 <section class="py-24 bg-surface-container-low">
     <div class="max-w-7xl mx-auto px-8">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8" data-animate="stagger">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8" data-animate="stagger">
             @foreach($items as $item)
             <div class="p-8 bg-surface-container-lowest rounded-2xl transition-all hover:translate-y-[-4px]">
                 <div class="text-xs font-bold text-outline uppercase tracking-widest mb-2 font-label">{{ $item['label'] }}</div>

@@ -125,24 +125,6 @@
                 </div>
             </form>
         </div>
-
-        <!-- Contact Info Cards -->
-        <div class="grid md:grid-cols-2 gap-6 mt-12">
-            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
-                <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
-                    <span class="material-symbols-outlined text-blue-600">email</span>
-                </div>
-                <h3 class="font-semibold text-slate-800 mb-1">Email</h3>
-                <a href="mailto:hello@innovesia.com" class="text-slate-600 hover:text-blue-600 text-sm">hello@innovesia.com</a>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
-                <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
-                    <span class="material-symbols-outlined text-blue-600">location_on</span>
-                </div>
-                <h3 class="font-semibold text-slate-800 mb-1">Location</h3>
-                <p class="text-slate-600 text-sm">Jakarta, Indonesia</p>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

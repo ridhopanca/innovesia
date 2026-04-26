@@ -70,7 +70,7 @@ $activeFilter = $data['active_filter'] ?? 'all';
             <input type="hidden" name="active_filter" id="active-filter" value="{{ $activeFilter }}">
             <p class="text-xs text-slate-400 mt-2">
                 <span class="material-icons-outlined text-xs align-middle">info</span>
-                Tag yang diisi di atas akan otomatis muncul sebagai filter di halaman frontend.
+                Tag yang diisi di atas akan otomatis muncul sebagai filter di halaman utama.
             </p>
         </div>
 

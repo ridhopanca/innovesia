@@ -110,8 +110,8 @@ $autoTags = array_unique($allCategories);
                     <div>
                         <label class="text-sm font-medium text-slate-600 mb-1 block">Full Content</label>
                         <textarea name="articles[{{ $index }}][content]"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
-                            rows="8" placeholder="Isi lengkap artikel (HTML atau plain text). Default: Lorem ipsum...">{{ $article['content'] ?? '' }}</textarea>
+                            class="tinymce-editor w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
+                            rows="12" placeholder="Isi lengkap artikel...">{{ $article['content'] ?? '' }}</textarea>
                         <p class="text-xs text-slate-400 mt-1">Konten lengkap untuk halaman detail artikel</p>
                     </div>
 
@@ -207,8 +207,8 @@ $autoTags = array_unique($allCategories);
                 <div>
                     <label class="text-sm font-medium text-slate-600 mb-1 block">Full Content</label>
                     <textarea name="articles[${newIndex}][content]"
-                        class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
-                        rows="8" placeholder="Isi lengkap artikel (HTML atau plain text). Default: Lorem ipsum..."></textarea>
+                        class="tinymce-editor w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
+                        rows="12" placeholder="Isi lengkap artikel..."></textarea>
                     <p class="text-xs text-slate-400 mt-1">Konten lengkap untuk halaman detail artikel</p>
                 </div>
 
@@ -356,4 +356,41 @@ $autoTags = array_unique($allCategories);
 
         slugInput.value = '/artikel/' + slug;
     }
+
+    // Initialize TinyMCE editors
+    function initTinyMCE() {
+        tinymce.init({
+            selector: '.tinymce-editor',
+            height: 400,
+            menubar: true,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Inter,sans-serif; font-size:16px }',
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save();
+                });
+            }
+        });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        initTinyMCE();
+    });
+
+    // Reinitialize TinyMCE after adding new article
+    const originalAddArticleItem = addArticleItem;
+    addArticleItem = function() {
+        originalAddArticleItem();
+        tinymce.remove();
+        initTinyMCE();
+    };
 </script>

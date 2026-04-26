@@ -50,6 +50,15 @@ $isPublished = !empty($section->content);
                 value="{{ $data['button_text'] ?? '' }}">
         </div>
 
+        <!-- Button URL -->
+        <div>
+            <label class="text-sm font-semibold text-slate-700 mb-2 block">URL Tombol</label>
+            <input type="text" name="button_url"
+                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                value="{{ $data['button_url'] ?? '' }}"
+                placeholder="https://instagram.com/innovesia_id">
+        </div>
+
         <!-- Posts -->
         <div class="space-y-4">
             <h3 class="font-semibold text-slate-700">Posts</h3>

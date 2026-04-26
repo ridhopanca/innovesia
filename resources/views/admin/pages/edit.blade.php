@@ -2,27 +2,32 @@
 
 @section('content')
 
-<div class="grid grid-cols-2 h-full">
+<div class="grid grid-cols-2 h-full transition-all duration-300 ease-in-out" id="main-grid">
 
     <!-- LEFT: EDITOR -->
     <div class="p-8 overflow-y-auto bg-white border-r border-slate-200">
         <div class="mb-8">
-            <div class="flex items-center gap-3 mb-2">
-                <a href="/cms" class="flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors">
-                    <span class="material-icons-outlined">arrow_back</span>
-                </a>
-                <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center shadow-lg">
-                    <span class="material-icons-outlined text-white text-lg">edit</span>
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                    <a href="/cms" class="flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors">
+                        <span class="material-icons-outlined">arrow_back</span>
+                    </a>
+                    <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center shadow-lg">
+                        <span class="material-icons-outlined text-white text-lg">edit</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-slate-800">
+                        Edit: {{ $page->title }}
+                    </h1>
                 </div>
-                <h1 class="text-2xl font-bold text-slate-800">
-                    Edit: {{ $page->title }}
-                </h1>
+                <button onclick="togglePreview()" class="flex items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors" title="Toggle Preview">
+                    <span class="material-icons-outlined text-lg" id="editor-toggle-icon">visibility_off</span>
+                </button>
             </div>
             <p class="text-slate-500 text-sm">Customize your page sections below</p>
         </div>
 
         @foreach($sections as $type => $section)
-        @include('admin.sections.' . $section->page_template . '.' . $type)
+        @includeIf('admin.sections.' . $section->page_template . '.' . $type)
         @endforeach
 
         <div id="success-message" class="hidden mb-6 bg-green-50 border border-green-200 rounded-2xl p-4">
@@ -54,7 +59,7 @@
     </div>
 
     <!-- RIGHT: PREVIEW -->
-    <div class="bg-slate-50">
+    <div class="bg-slate-50 transition-all duration-300 ease-in-out" id="preview-panel">
         <div class="h-12 bg-white border-b border-slate-200 flex items-center px-6 gap-2">
             <span class="material-icons-outlined text-slate-500">visibility</span>
             <span class="text-sm font-medium text-slate-600">Live Preview</span>
@@ -86,7 +91,6 @@
             data.set('image', urlInput.value);
         }
 
-        console.log('Saving section', id, 'with data:', Object.fromEntries(data));
         return fetch(`/cms/sections/${id}`, {
                 method: 'POST',
                 headers: {
@@ -176,6 +180,26 @@
         } else {
             urlDiv.classList.add('hidden');
             uploadDiv.classList.remove('hidden');
+        }
+    }
+
+    function togglePreview() {
+        const previewPanel = document.getElementById('preview-panel');
+        const editorToggleIcon = document.getElementById('editor-toggle-icon');
+        const mainGrid = document.getElementById('main-grid');
+
+        if (previewPanel.classList.contains('hidden')) {
+            // Show preview
+            previewPanel.classList.remove('hidden');
+            editorToggleIcon.textContent = 'visibility_off';
+            mainGrid.classList.remove('grid-cols-1');
+            mainGrid.classList.add('grid-cols-2');
+        } else {
+            // Hide preview
+            previewPanel.classList.add('hidden');
+            editorToggleIcon.textContent = 'visibility';
+            mainGrid.classList.remove('grid-cols-2');
+            mainGrid.classList.add('grid-cols-1');
         }
     }
 </script>

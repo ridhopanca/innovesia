@@ -95,7 +95,7 @@
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 
     @foreach($sections as $type => $content)
-    @include('sections.' . $page->template . '.' . $type, [
+    @includeIf('sections.' . $page->template . '.' . $type, [
     'data' => $content
     ])
     @endforeach

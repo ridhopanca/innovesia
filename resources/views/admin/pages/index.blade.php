@@ -191,6 +191,56 @@
         </div>
         @endforeach
     </div>
+
+    <!-- General Information Section -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="page-card rounded-2xl overflow-hidden group">
+            <!-- Card Header with Gradient -->
+            <div class="h-24 gradient-bg relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+                <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+                <div class="absolute top-4 left-4">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-400/20 text-green-50 backdrop-blur-sm border border-green-400/30">
+                        Active
+                    </span>
+                </div>
+                <div class="absolute bottom-4 left-4 right-4">
+                    <div class="text-white/60 text-xs font-medium uppercase tracking-wider">General Information</div>
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-5">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center shrink-0 border border-slate-200 group-hover:border-indigo-200 transition-colors">
+                        <span class="material-icons-outlined text-slate-400 group-hover:text-indigo-500 transition-colors">link</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-bold text-slate-800 text-lg truncate group-hover:text-indigo-600 transition-colors">Links & Information</h3>
+                        <p class="text-sm text-slate-400 mt-1">Social media & contact links</p>
+                    </div>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="flex items-center gap-4 mt-4 pt-4 border-t border-slate-100">
+                    <div class="flex items-center gap-1.5 text-xs text-slate-500">
+                        <span class="material-icons-outlined text-base">link</span>
+                        <span>{{ $generalInfo ? count($generalInfo->items) : 0 }} links</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Footer / Action -->
+            <div class="px-5 pb-5">
+                <a href="{{ route('admin.general-information.edit') }}"
+                    class="edit-btn w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white font-semibold">
+                    <span class="material-icons-outlined text-lg">edit</span>
+                    <span>Edit Links</span>
+                    <span class="material-icons-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

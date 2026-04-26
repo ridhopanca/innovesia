@@ -33,11 +33,16 @@ Route::prefix('cms')->group(function () {
 Route::prefix('cms')->middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/', [\App\Http\Controllers\Admin\PageController::class, 'index']);
-    Route::get('/pages/{slug}', [\App\Http\Controllers\Admin\PageController::class, 'edit']);
+    Route::get('/', [\App\Http\Controllers\Admin\PageController::class, 'index'])->name('admin.pages.index');
+    Route::get('/pages/{slug}', [\App\Http\Controllers\Admin\PageController::class, 'edit'])->name('admin.pages.edit');
 
-    Route::post('/sections/{section}', [\App\Http\Controllers\Admin\SectionController::class, 'updateDraft']);
-    Route::post('/pages/{slug}/publish', [\App\Http\Controllers\Admin\PageController::class, 'publish']);
+    Route::post('/sections/{section}', [\App\Http\Controllers\Admin\SectionController::class, 'updateDraft'])->name('admin.sections.update');
+    Route::post('/pages/{slug}/publish', [\App\Http\Controllers\Admin\PageController::class, 'publish'])->name('admin.pages.publish');
+
+    // General Information Routes
+    Route::get('/general-information', [\App\Http\Controllers\Admin\GeneralInformationController::class, 'index'])->name('admin.general-information.index');
+    Route::get('/general-information/edit', [\App\Http\Controllers\Admin\GeneralInformationController::class, 'edit'])->name('admin.general-information.edit');
+    Route::put('/general-information', [\App\Http\Controllers\Admin\GeneralInformationController::class, 'update'])->name('admin.general-information.update');
 });
 
 Route::get('/preview/{page}', [\App\Http\Controllers\PreviewController::class, 'show']);
