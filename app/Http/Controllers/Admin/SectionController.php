@@ -31,10 +31,14 @@ class SectionController extends Controller
 
         $section->save();
 
-        // Invalidate cache for the page this section belongs to
-        $page = $section->page;
-        if ($page) {
-            Cache::forget("page_{$page->slug}");
+        // Invalidate cache for the page this section belongs to (ignore errors)
+        try {
+            $page = $section->page;
+            if ($page) {
+                Cache::forget("page_{$page->slug}");
+            }
+        } catch (\Exception $e) {
+            // Ignore cache errors
         }
 
         return response()->json(['status' => 'ok']);

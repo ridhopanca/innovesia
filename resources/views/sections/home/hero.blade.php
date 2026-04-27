@@ -27,7 +27,7 @@
                 </a>
                 @endif
                 @if(isset($data['secondary_button']))
-                <a href="{{ route('portfolio') }}">
+                <a href="{{ route('our-work') }}">
                     <button class="px-6 md:px-8 py-3 md:py-4 border border-outline-variant/30 text-primary rounded-xl font-headline font-bold text-base md:text-lg hover:bg-surface-container-low transition-all">
                         {{ $data['secondary_button'] }}
                     </button>

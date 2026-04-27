@@ -12,33 +12,62 @@ class PageController extends Controller
     // List semua page
     public function index()
     {
-        $pages = Page::with('sections')->get()->map(function ($page) {
-            // Cek apakah ada section dengan draft (unpublished changes)
-            $hasDraftSection = $page->sections->contains(function ($section) {
-                return !empty($section->draft_content);
+        // Get only root pages (pages without parent)
+        $rootPages = Page::whereNull('parent_id')
+            ->with(['sections', 'children' => function ($query) {
+                $query->with('sections')->orderBy('title');
+            }])
+            ->get()
+            ->map(function ($page) {
+                // Cek apakah ada section dengan draft (unpublished changes)
+                $hasDraftSection = $page->sections->contains(function ($section) {
+                    return !empty($section->draft_content);
+                });
+
+                // Cek apakah ada content yang sudah pernah di-publish
+                $hasPublishedContent = $page->sections->contains(function ($section) {
+                    return !empty($section->content);
+                });
+
+                // Tentukan display status
+                if ($hasDraftSection && $hasPublishedContent) {
+                    $page->display_status = 'modified'; // Sudah publish tapi ada perubahan draft
+                } elseif ($hasDraftSection && !$hasPublishedContent) {
+                    $page->display_status = 'draft'; // Belum pernah publish
+                } else {
+                    $page->display_status = 'published'; // Tidak ada draft
+                }
+
+                // Hitung unique section types (untuk display yang akurat)
+                $page->unique_sections_count = $page->sections->unique('type')->count();
+
+                // Process children pages
+                $page->children = $page->children->map(function ($child) {
+                    $childHasDraftSection = $child->sections->contains(function ($section) {
+                        return !empty($section->draft_content);
+                    });
+
+                    $childHasPublishedContent = $child->sections->contains(function ($section) {
+                        return !empty($section->content);
+                    });
+
+                    if ($childHasDraftSection && $childHasPublishedContent) {
+                        $child->display_status = 'modified';
+                    } elseif ($childHasDraftSection && !$childHasPublishedContent) {
+                        $child->display_status = 'draft';
+                    } else {
+                        $child->display_status = 'published';
+                    }
+
+                    $child->unique_sections_count = $child->sections->unique('type')->count();
+
+                    return $child;
+                });
+
+                return $page;
             });
 
-            // Cek apakah ada content yang sudah pernah di-publish
-            $hasPublishedContent = $page->sections->contains(function ($section) {
-                return !empty($section->content);
-            });
-
-            // Tentukan display status
-            if ($hasDraftSection && $hasPublishedContent) {
-                $page->display_status = 'modified'; // Sudah publish tapi ada perubahan draft
-            } elseif ($hasDraftSection && !$hasPublishedContent) {
-                $page->display_status = 'draft'; // Belum pernah publish
-            } else {
-                $page->display_status = 'published'; // Tidak ada draft
-            }
-
-            // Hitung unique section types (untuk display yang akurat)
-            $page->unique_sections_count = $page->sections->unique('type')->count();
-
-            return $page;
-        });
-
-        return view('admin.pages.index', compact('pages'));
+        return view('admin.pages.index', ['pages' => $rootPages]);
     }
 
     // Edit page (split editor + preview)
@@ -68,8 +97,12 @@ class PageController extends Controller
         $page->published_at = now();
         $page->save();
 
-        // Invalidate cache for this page
-        Cache::forget("page_{$slug}");
+        // Invalidate cache for this page (ignore errors)
+        try {
+            Cache::forget("page_{$slug}");
+        } catch (\Exception $e) {
+            // Ignore cache errors
+        }
 
         return back()->with('success', 'Page published');
     }

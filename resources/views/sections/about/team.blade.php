@@ -10,9 +10,9 @@
                 @endif
             </div>
             @if(isset($data['button_text']))
-            <button class="flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all">
+            <a href="{{ route('collective-structure') }}" class="flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all">
                 {{ $data['button_text'] }} <span class="material-symbols-outlined">arrow_forward</span>
-            </button>
+            </a>
             @endif
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12" data-animate="stagger">

@@ -12,7 +12,7 @@ $services = $data['services'] ?? [
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-black font-headline text-primary tracking-tighter mb-4 md:mb-6">{{ $data['title'] ?? 'Strategic Capabilities' }}</h2>
                 <p class="text-base md:text-lg text-on-surface-variant leading-relaxed">{{ $data['description'] ?? 'We bridge the gap between high-stakes corporate strategy and the fluid, empathetic energy of human-centered innovation.' }}</p>
             </div>
-            <a class="group flex items-center gap-2 text-primary font-bold font-headline" href="#">
+            <a class="group flex items-center gap-2 text-primary font-bold font-headline" href="{{ route('strategic-capabilities') }}">
                 {{ $data['link_text'] ?? 'View All Capabilities' }}
                 <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </a>

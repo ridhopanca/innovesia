@@ -30,6 +30,14 @@
         @includeIf('admin.sections.' . $section->page_template . '.' . $type)
         @endforeach
 
+        @if($page->slug === 'our-work')
+        @include('admin.pages.partials.projects')
+        @endif
+
+        @if($page->slug === 'collective-structure')
+        @include('admin.pages.partials.team-members')
+        @endif
+
         <div id="success-message" class="hidden mb-6 bg-green-50 border border-green-200 rounded-2xl p-4">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">

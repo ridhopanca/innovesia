@@ -11,19 +11,13 @@ class PageController extends Controller
 {
     public function show($slug)
     {
-        $cacheKey = "page_{$slug}";
+        $page = Page::where('slug', $slug)->firstOrFail();
 
-        $page = Cache::remember($cacheKey, now()->addHours(24), function () use ($slug) {
-            $page = Page::where('slug', $slug)->firstOrFail();
-
-            $sections = $page->sections->mapWithKeys(function ($section) {
-                return [$section->type => $section->content ?? []];
-            });
-
-            return compact('page', 'sections');
+        $sections = $page->sections->mapWithKeys(function ($section) {
+            return [$section->type => $section->content ?? []];
         });
 
-        return view('pages.' . $page['page']->template, $page);
+        return view('pages.' . $page->template, compact('page', 'sections'));
     }
 
     public function articleDetail($slug)
@@ -131,6 +125,58 @@ class PageController extends Controller
         ];
 
         return view('pages.article-detail', compact('page', 'data'));
+    }
+
+    /**
+     * Show strategic capabilities page
+     */
+    public function strategicCapabilities()
+    {
+        $page = Page::where('slug', 'strategic-capabilities')->firstOrFail();
+        $sections = $page->sections->mapWithKeys(function ($section) {
+            return [$section->type => $section->content ?? []];
+        });
+        return view('pages.strategic-capabilities', compact('page', 'sections'));
+    }
+
+    /**
+     * Show collective structure page
+     */
+    public function collectiveStructure()
+    {
+        $page = Page::where('slug', 'collective-structure')->firstOrFail();
+        $sections = $page->sections->mapWithKeys(function ($section) {
+            return [$section->type => $section->content ?? []];
+        });
+
+        $teamMembers = \App\Models\TeamMember::published()->ordered()->paginate(9);
+
+        return view('pages.collective-structure', compact('page', 'sections', 'teamMembers'));
+    }
+
+    /**
+     * Show our work page
+     */
+    public function ourWork()
+    {
+        $page = Page::where('slug', 'our-work')->firstOrFail();
+        $sections = $page->sections->mapWithKeys(function ($section) {
+            return [$section->type => $section->content ?? []];
+        });
+
+        $featuredProject = \App\Models\Project::published()->featured()->first();
+        $projects = \App\Models\Project::published()->where('is_featured', false)->ordered()->get();
+
+        return view('pages.our-work', compact('page', 'sections', 'featuredProject', 'projects'));
+    }
+
+    /**
+     * Show project detail page
+     */
+    public function projectDetail($slug)
+    {
+        $project = \App\Models\Project::where('slug', $slug)->published()->firstOrFail();
+        return view('pages.project-detail', compact('project'));
     }
 
     /**

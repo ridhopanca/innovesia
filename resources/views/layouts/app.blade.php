@@ -111,11 +111,15 @@
 
 <body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 
+	@if(!isset($isPreview) || !$isPreview)
 	@include('components.navbar')
+	@endif
 	<main class="@yield('main_classes', 'pt-20')">
 		@yield('content')
 	</main>
+	@if(!isset($isPreview) || !$isPreview)
 	@include('components.footer')
+	@endif
 
 	<script>
 		gsap.registerPlugin(ScrollTrigger);
