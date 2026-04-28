@@ -4,6 +4,7 @@
 @section('footer_classes', 'w-full')
 
 @section('content')
+@if(isset($sections['content']))
 <!-- Hero Section -->
 <section class="relative min-h-[716px] flex items-center overflow-hidden px-8 md:px-16 py-20 bg-surface">
     <div class="absolute inset-0 z-0">
@@ -215,4 +216,5 @@
         </div>
     </div>
 </section>
+@endif
 @endsection

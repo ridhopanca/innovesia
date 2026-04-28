@@ -8,7 +8,9 @@ class PreviewController extends Controller
 {
     public function show(Page $page)
     {
-        $sections = $page->sections->mapWithKeys(function ($section) {
+        $sections = $page->sections->filter(function ($section) {
+            return $section->is_visible === true;
+        })->mapWithKeys(function ($section) {
             return [$section->type => $section->draft_content ?? $section->content ?? []];
         });
 

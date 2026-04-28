@@ -76,9 +76,26 @@
     <!-- Stats Overview -->
     <div class="grid grid-cols-4 gap-4 mb-8">
         @php
-        $published = $pages->where('display_status', 'published')->count();
-        $modified = $pages->where('display_status', 'modified')->count();
-        $draft = $pages->where('display_status', 'draft')->count();
+        // Exclude community page from normal counts and calculate separately
+        $regularPages = $pages->where('slug', '!=', 'community');
+        $communityPage = $pages->where('slug', 'community')->first();
+
+        $published = $regularPages->where('display_status', 'published')->count();
+        $modified = $regularPages->where('display_status', 'modified')->count();
+        $draft = $regularPages->where('display_status', 'draft')->count();
+
+        // Calculate community status separately
+        if ($communityPage) {
+        $totalCommunities = \App\Models\Community::count();
+        $publishedCommunities = \App\Models\Community::published()->count();
+        $isCommunityPublished = ($totalCommunities > 0 && $totalCommunities === $publishedCommunities);
+
+        if ($isCommunityPublished) {
+        $published++;
+        } else {
+        $modified++;
+        }
+        }
         @endphp
         <div class="page-card rounded-2xl p-5">
             <div class="flex items-center gap-3">
@@ -135,11 +152,19 @@
                 <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
                 <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
                 <div class="absolute top-4 left-4">
-                    @if($page->display_status === 'published')
+                    @php
+                    $displayStatus = $page->display_status;
+                    if ($page->slug === 'community') {
+                    $totalCommunities = \App\Models\Community::count();
+                    $publishedCommunities = \App\Models\Community::published()->count();
+                    $displayStatus = ($totalCommunities > 0 && $totalCommunities === $publishedCommunities) ? 'published' : 'modified';
+                    }
+                    @endphp
+                    @if($displayStatus === 'published')
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-400/20 text-green-50 backdrop-blur-sm border border-green-400/30">
                         Published
                     </span>
-                    @elseif($page->display_status === 'modified')
+                    @elseif($displayStatus === 'modified')
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-400/20 text-amber-50 backdrop-blur-sm border border-amber-400/30 status-pulse">
                         Modified
                     </span>
@@ -223,6 +248,30 @@
                         <span>Manage Services</span>
                     </a>
                 </div>
+                @elseif($page->slug === 'collective-structure')
+                <div class="flex flex-col gap-3">
+                    <a href="/cms/pages/{{ $page->slug }}"
+                        class="flex-1 edit-btn inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white font-semibold">
+                        <span class="material-icons-outlined text-lg">edit</span>
+                        <span>Edit Page</span>
+                    </a>
+                    <a href="/cms/team-members"
+                        class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl font-semibold transition-all inline-flex items-center justify-center gap-2">
+                        <span class="material-icons-outlined text-lg">groups</span>
+                        <span>Manage Team Members</span>
+                    </a>
+                </div>
+                @elseif($page->slug === 'community')
+                @php
+                $communityCount = \App\Models\Community::published()->count();
+                @endphp
+                <div class="flex flex-col gap-3">
+                    <a href="/cms/communities"
+                        class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl font-semibold transition-all inline-flex items-center justify-center gap-2">
+                        <span class="material-icons-outlined text-lg">diversity_3</span>
+                        <span>Manage Communities ({{ $communityCount }})</span>
+                    </a>
+                </div>
                 @else
                 <a href="/cms/pages/{{ $page->slug }}"
                     class="edit-btn w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white font-semibold">
@@ -258,10 +307,7 @@
             @endif
         </div>
         @endforeach
-    </div>
-
-    <!-- General Information Section -->
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- General Information Section -->
         <div class="page-card rounded-2xl overflow-hidden group">
             <!-- Card Header with Gradient -->
             <div class="h-24 gradient-bg relative overflow-hidden">

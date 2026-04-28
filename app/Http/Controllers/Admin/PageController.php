@@ -14,6 +14,7 @@ class PageController extends Controller
     {
         // Get only root pages (pages without parent)
         $rootPages = Page::whereNull('parent_id')
+            ->where('slug', '!=', 'portfolio')
             ->with(['sections', 'children' => function ($query) {
                 $query->with('sections')->orderBy('title');
             }])
@@ -89,8 +90,8 @@ class PageController extends Controller
             if ($section->draft_content) {
                 $section->content = $section->draft_content;
                 $section->draft_content = null; // Clear draft setelah publish
-                $section->save();
             }
+            $section->save(); // Always save to persist is_visible changes
         }
 
         $page->status = 'published';

@@ -12,11 +12,13 @@ class Section extends Model
         'order',
         'content',
         'draft_content',
-        'page_template'
+        'page_template',
+        'is_visible'
     ];
 
     protected $casts = [
         'content' => 'array',
         'draft_content' => 'array',
+        'is_visible' => 'boolean',
     ];
 }

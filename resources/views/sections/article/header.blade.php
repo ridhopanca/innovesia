@@ -25,7 +25,7 @@ $activeFilter = request()->query('filter', $data['active_filter'] ?? 'all');
         <div class="flex flex-wrap gap-2" id="tag-filters">
             <a href="{{ request()->url() }}"
                 class="px-5 py-2 rounded-full text-sm font-medium transition-colors {{ $activeFilter === 'all' ? 'bg-primary text-white' : 'bg-secondary-container text-on-secondary-container hover:bg-surface-container-high' }}">
-                All Insights
+                All
             </a>
             @foreach($tags as $tag)
             <a href="{{ request()->url() }}?filter={{ urlencode($tag) }}"

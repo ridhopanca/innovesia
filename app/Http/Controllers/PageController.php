@@ -11,9 +11,10 @@ class PageController extends Controller
 {
     public function show($slug)
     {
-        $page = Page::where('slug', $slug)->firstOrFail();
-
-        $sections = $page->sections->mapWithKeys(function ($section) {
+        $page = Page::where('slug', $slug)->where('slug', '!=', 'portfolio')->firstOrFail();
+        $sections = $page->sections->filter(function ($section) {
+            return $section->is_visible === true;
+        })->mapWithKeys(function ($section) {
             return [$section->type => $section->content ?? []];
         });
 
@@ -26,7 +27,9 @@ class PageController extends Controller
         $page = Page::where('slug', 'articles')->firstOrFail();
 
         // Get all sections
-        $sections = $page->sections->mapWithKeys(function ($section) {
+        $sections = $page->sections->filter(function ($section) {
+            return $section->is_visible === true;
+        })->mapWithKeys(function ($section) {
             return [$section->type => $section->content ?? []];
         });
 
@@ -133,7 +136,9 @@ class PageController extends Controller
     public function strategicCapabilities()
     {
         $page = Page::where('slug', 'strategic-capabilities')->firstOrFail();
-        $sections = $page->sections->mapWithKeys(function ($section) {
+        $sections = $page->sections->filter(function ($section) {
+            return $section->is_visible === true;
+        })->mapWithKeys(function ($section) {
             return [$section->type => $section->content ?? []];
         });
         return view('pages.strategic-capabilities', compact('page', 'sections'));
@@ -145,7 +150,9 @@ class PageController extends Controller
     public function collectiveStructure()
     {
         $page = Page::where('slug', 'collective-structure')->firstOrFail();
-        $sections = $page->sections->mapWithKeys(function ($section) {
+        $sections = $page->sections->filter(function ($section) {
+            return $section->is_visible === true;
+        })->mapWithKeys(function ($section) {
             return [$section->type => $section->content ?? []];
         });
 
@@ -160,7 +167,9 @@ class PageController extends Controller
     public function ourWork()
     {
         $page = Page::where('slug', 'our-work')->firstOrFail();
-        $sections = $page->sections->mapWithKeys(function ($section) {
+        $sections = $page->sections->filter(function ($section) {
+            return $section->is_visible === true;
+        })->mapWithKeys(function ($section) {
             return [$section->type => $section->content ?? []];
         });
 
@@ -189,12 +198,41 @@ class PageController extends Controller
     }
 
     /**
+     * Show team member detail page
+     */
+    public function teamMemberDetail($slug)
+    {
+        $member = \App\Models\TeamMember::where('slug', $slug)->published()->firstOrFail();
+        return view('pages.team-member', compact('member'));
+    }
+
+    /**
+     * Show community listing page
+     */
+    public function community()
+    {
+        $communities = \App\Models\Community::published()->ordered()->get();
+        return view('pages.community-listing', compact('communities'));
+    }
+
+    /**
+     * Show community detail page
+     */
+    public function communityDetail($slug)
+    {
+        $community = \App\Models\Community::where('slug', $slug)->published()->firstOrFail();
+        return view('pages.community-detail', compact('community'));
+    }
+
+    /**
      * Show product page with services
      */
     public function product()
     {
         $page = Page::where('slug', 'product')->firstOrFail();
-        $sections = $page->sections->mapWithKeys(function ($section) {
+        $sections = $page->sections->filter(function ($section) {
+            return $section->is_visible === true;
+        })->mapWithKeys(function ($section) {
             return [$section->type => $section->content ?? []];
         });
 

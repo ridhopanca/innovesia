@@ -3,8 +3,14 @@
 @section('footer_classes', 'w-full border-t border-slate-200/50 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-950')
 @section('content')
 
-@include('sections.article.header', ['data' => $sections['header'] ?? []])
-@include('sections.article.featured', ['data' => $sections['featured'] ?? []])
-@include('sections.article.article', ['data' => $sections['article'] ?? []])
+@if(isset($sections['header']))
+@include('sections.article.header', ['data' => $sections['header']])
+@endif
+@if(isset($sections['featured']))
+@include('sections.article.featured', ['data' => $sections['featured']])
+@endif
+@if(isset($sections['article']))
+@include('sections.article.article', ['data' => $sections['article']])
+@endif
 
 @endsection

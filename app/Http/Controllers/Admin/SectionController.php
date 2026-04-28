@@ -22,12 +22,13 @@ class SectionController extends Controller
             $data['image'] = $path;
         }
 
-
         if (isset($data['items'])) {
             $section->draft_content = $data['items'];
         } else {
+
             $section->draft_content = $data;
         }
+        $section->is_visible = $request->has('is_visible');
 
         $section->save();
 

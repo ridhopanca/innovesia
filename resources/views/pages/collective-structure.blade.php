@@ -4,6 +4,7 @@
 @section('footer_classes', 'w-full')
 
 @section('content')
+@if(isset($sections['content']))
 <!-- Hero Section -->
 <section class="px-8 max-w-7xl mx-auto mb-32">
     <div class="flex flex-col md:flex-row gap-16 items-center">
@@ -215,4 +216,5 @@
         </div>
     </div>
 </section>
+@endif
 @endsection

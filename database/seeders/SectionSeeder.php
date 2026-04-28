@@ -527,6 +527,82 @@ class SectionSeeder extends Seeder
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],
+
+            // ===== OUR WORK PAGE (page_id: 7) =====
+            [
+                'page_id' => 7,
+                'page_template' => 'our-work',
+                'type' => 'content',
+                'order' => 1,
+                'content' => json_encode([
+                    "hero_title" => "Our Work & Impact",
+                    "hero_description" => "Explore how Innovesia translates complex insight into real-world impact, bridging the gap between strategic institutional vision and human-centric design.",
+                    "cta_title" => "Let's Create Impact Together",
+                    "cta_description" => "Ready to transform your institutional challenges into human-centered solutions? Our strategy team is standing by to architect your next breakthrough."
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // ===== STRATEGIC CAPABILITIES PAGE (page_id: 8) =====
+            [
+                'page_id' => 8,
+                'page_template' => 'strategic-capabilities',
+                'type' => 'content',
+                'order' => 1,
+                'content' => json_encode([
+                    "hero_title" => "Strategic Capabilities",
+                    "hero_description" => "Innovesia bridges the gap between complex strategic challenges and human-centered innovation, transforming insights into actionable impact.",
+                    "approach_title" => "Our Approach",
+                    "approach_description" => "Our methodology combines rigorous research with creative exploration to deliver solutions that resonate with users and drive business impact.",
+                    "capabilities_title" => "Built for Modern Transformation",
+                    "capabilities_subtitle" => "Our core disciplines are designed to address the multifaceted nature of contemporary business and social ecosystems.",
+                    "capability_1_title" => "Design Research",
+                    "capability_1_description" => "Deep-dive ethnographic studies and trend analysis to uncover the 'why' behind user behaviors and market shifts.",
+                    "capability_2_title" => "Innovation Strategy",
+                    "capability_2_description" => "Developing long-term roadmaps that align business objectives with emerging opportunities and disruptive technologies.",
+                    "capability_3_title" => "Human-Centered Design",
+                    "capability_3_description" => "Prioritizing human needs and experiences at every stage of the design process to ensure resonant, intuitive solutions.",
+                    "capability_4_title" => "Design Thinking Workshop",
+                    "capability_4_description" => "Expertly moderated sessions that foster collaborative problem-solving and rapid ideation across diverse teams.",
+                    "capability_5_title" => "InnoVocation Lab",
+                    "capability_5_description" => "A specialized sandbox for prototyping and testing high-risk, high-reward concepts in a controlled, creative environment.",
+                    "capability_6_title" => "Public Sector & Policy",
+                    "capability_6_description" => "Applying innovation methodologies to civic challenges, governance systems, and complex policy development frameworks.",
+                    "capability_7_title" => "Digital & Platform",
+                    "capability_7_description" => "Building resilient digital architectures and seamless platform experiences that scale with user growth and technical complexity.",
+                    "capability_8_title" => "Insightism (Data Analysis)",
+                    "capability_8_description" => "Synthesizing quantitative data with qualitative insights to create a comprehensive view of performance and potential.",
+                    "capability_9_title" => "Program & Ecosystem",
+                    "capability_9_description" => "Orchestrating broad networks of stakeholders to drive systemic change and sustainable community-led innovation.",
+                    "why_it_matters_title" => "Why Our Capabilities Matter",
+                    "why_point_1_title" => "Bridging Strategy & Execution",
+                    "why_point_1_description" => "Vision without implementation is a hallucination. We provide the architectural framework and technical expertise to move from abstract strategy to tangible market impact.",
+                    "why_point_2_title" => "Data & Human Insight",
+                    "why_point_2_description" => "We decode complexity by layering quantitative data with qualitative human narratives, ensuring decisions are informed by both logic and empathy.",
+                    "why_point_3_title" => "Policy & Real-world Impact",
+                    "why_point_3_description" => "Our approach scales from individual product interactions to nation-wide policy shifts, maintaining fidelity to the user's needs at every level.",
+                    "cta_title" => "Turn Insight Into Impact",
+                    "cta_description" => "Join the ranks of forward-thinking organizations scaling their innovation potential with Innovesia's strategic guidance."
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // ===== COLLECTIVE STRUCTURE PAGE (page_id: 9) =====
+            [
+                'page_id' => 9,
+                'page_template' => 'collective-structure',
+                'type' => 'content',
+                'order' => 1,
+                'content' => json_encode([
+                    "title" => "Meet the Collective",
+                    "subtitle" => "Our team of strategists, researchers, and designers",
+                    "description" => "A diverse collective of experts united by a passion for human-centered innovation."
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }
