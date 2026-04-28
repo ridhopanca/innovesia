@@ -176,7 +176,17 @@
                         <span class="material-icons-outlined text-base">view_carousel</span>
                         <span>{{ $page->unique_sections_count }} sections</span>
                     </div>
-                    @if($page->children->count() > 0)
+                    @if($page->slug === 'product')
+                    @php
+                    $serviceCount = \App\Models\Service::published()->count();
+                    @endphp
+                    @if($serviceCount > 0)
+                    <button onclick="openServicesModal()" class="flex items-center gap-1.5 text-xs text-indigo-600 font-semibold hover:text-indigo-800 transition-colors">
+                        <span class="material-icons-outlined text-base">subdirectory_arrow_right</span>
+                        <span>{{ $serviceCount }} services</span>
+                    </button>
+                    @endif
+                    @elseif($page->children->count() > 0)
                     <div class="flex items-center gap-1.5 text-xs text-indigo-600 font-semibold">
                         <span class="material-icons-outlined text-base">subdirectory_arrow_right</span>
                         <span>{{ $page->children->count() }} detail pages</span>
@@ -198,6 +208,19 @@
                         class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl font-semibold transition-all inline-flex items-center justify-center gap-2">
                         <span class="material-icons-outlined text-lg">work</span>
                         <span>Manage Projects</span>
+                    </a>
+                </div>
+                @elseif($page->slug === 'product')
+                <div class="flex flex-col gap-3">
+                    <a href="/cms/pages/{{ $page->slug }}"
+                        class="flex-1 edit-btn inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white font-semibold">
+                        <span class="material-icons-outlined text-lg">edit</span>
+                        <span>Edit Page</span>
+                    </a>
+                    <a href="/cms/services"
+                        class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl font-semibold transition-all inline-flex items-center justify-center gap-2">
+                        <span class="material-icons-outlined text-lg">business_center</span>
+                        <span>Manage Services</span>
                     </a>
                 </div>
                 @else
@@ -288,4 +311,76 @@
     </div>
 </div>
 
+<!-- Services Modal -->
+<div id="servicesModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
+        <div class="gradient-bg px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="material-icons-outlined text-white text-2xl">business_center</span>
+                <h2 class="font-bold text-lg text-white">Services</h2>
+            </div>
+            <button onclick="closeServicesModal()" class="text-white/80 hover:text-white transition-colors">
+                <span class="material-icons-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[60vh]">
+            <div class="space-y-2">
+                @php
+                $allServices = \App\Models\Service::ordered()->get();
+                @endphp
+                @foreach($allServices as $service)
+                <a href="/cms/services/{{ $service->id }}/edit?referrer={{ url()->current() }}" class="flex items-center gap-3 p-4 rounded-xl bg-slate-50 hover:bg-indigo-50 transition-colors group/child">
+                    <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shrink-0 border border-slate-200">
+                        <span class="material-icons-outlined text-slate-400">business_center</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-slate-700 truncate group-hover/child:text-indigo-600 transition-colors">{{ $service->title }}</div>
+                        <div class="text-sm text-slate-400">/service/{{ $service->slug }}</div>
+                    </div>
+                    @if($service->status === 'draft')
+                    <span class="px-2 py-1 rounded-full text-xs font-semibold bg-orange-400/20 text-orange-700">Draft</span>
+                    @elseif($service->status === 'published')
+                    <span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-400/20 text-green-700">Published</span>
+                    @endif
+                </a>
+                @endforeach
+            </div>
+        </div>
+        <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
+            <a href="/cms/services" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition-all">
+                <span class="material-icons-outlined">settings</span>
+                <span>Manage All Services</span>
+            </a>
+        </div>
+    </div>
+</div>
+
 @endsection
+
+@push('scripts')
+<script>
+    function openServicesModal() {
+        document.getElementById('servicesModal').classList.remove('hidden');
+        document.getElementById('servicesModal').classList.add('flex');
+    }
+
+    function closeServicesModal() {
+        document.getElementById('servicesModal').classList.add('hidden');
+        document.getElementById('servicesModal').classList.remove('flex');
+    }
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeServicesModal();
+        }
+    });
+
+    // Close modal on backdrop click
+    document.getElementById('servicesModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeServicesModal();
+        }
+    });
+</script>
+@endpush

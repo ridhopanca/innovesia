@@ -6,7 +6,7 @@ use App\Http\Controllers\PageController;
 
 Route::get('/', [PageController::class, 'show'])->defaults('slug', 'home')->name('home');
 Route::get('/about', [PageController::class, 'show'])->defaults('slug', 'about')->name('about');
-Route::get('/product', [PageController::class, 'show'])->defaults('slug', 'product')->name('product');
+Route::get('/product', [PageController::class, 'product'])->name('product');
 Route::get('/portfolio', [PageController::class, 'show'])->defaults('slug', 'portfolio')->name('portfolio');
 Route::get('/articles', [PageController::class, 'show'])->defaults('slug', 'articles')->name('articles');
 Route::get('/community', [PageController::class, 'show'])->defaults('slug', 'community')->name('community');
@@ -14,6 +14,7 @@ Route::get('/strategic-capabilities', [PageController::class, 'strategicCapabili
 Route::get('/collective-structure', [PageController::class, 'collectiveStructure'])->name('collective-structure');
 Route::get('/our-work', [PageController::class, 'ourWork'])->name('our-work');
 Route::get('/project/{slug}', [PageController::class, 'projectDetail'])->name('project-detail');
+Route::get('/service/{slug}', [PageController::class, 'serviceDetail'])->name('service-detail');
 
 // Contact Page Routes
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
@@ -51,6 +52,14 @@ Route::prefix('cms')->middleware('auth')->group(function () {
     Route::get('/projects/{id}/edit', [\App\Http\Controllers\Admin\ProjectController::class, 'edit'])->name('admin.projects.edit');
     Route::put('/projects/{id}', [\App\Http\Controllers\Admin\ProjectController::class, 'update'])->name('admin.projects.update');
     Route::delete('/projects/{id}', [\App\Http\Controllers\Admin\ProjectController::class, 'destroy'])->name('admin.projects.destroy');
+
+    // Services Routes
+    Route::get('/services', [\App\Http\Controllers\Admin\ServiceController::class, 'index'])->name('admin.services.index');
+    Route::get('/services/create', [\App\Http\Controllers\Admin\ServiceController::class, 'create'])->name('admin.services.create');
+    Route::post('/services', [\App\Http\Controllers\Admin\ServiceController::class, 'store'])->name('admin.services.store');
+    Route::get('/services/{id}/edit', [\App\Http\Controllers\Admin\ServiceController::class, 'edit'])->name('admin.services.edit');
+    Route::put('/services/{id}', [\App\Http\Controllers\Admin\ServiceController::class, 'update'])->name('admin.services.update');
+    Route::delete('/services/{id}', [\App\Http\Controllers\Admin\ServiceController::class, 'destroy'])->name('admin.services.destroy');
 
     // Team Members Routes
     Route::get('/team-members', [\App\Http\Controllers\Admin\TeamMemberController::class, 'index'])->name('admin.team-members.index');

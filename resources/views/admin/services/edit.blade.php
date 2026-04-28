@@ -1,0 +1,190 @@
+@extends('layouts.admin')
+
+@section('content')
+
+<div class="p-8 max-w-7xl mx-auto">
+    <!-- Header Section -->
+    <div class="mb-10">
+        <div class="flex items-center gap-4 mb-3">
+            @if(request('referrer'))
+            <a href="{{ request('referrer') }}" class="flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors">
+                <span class="material-icons-outlined">arrow_back</span>
+            </a>
+            @else
+            <a href="{{ route('admin.services.index') }}" class="flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors">
+                <span class="material-icons-outlined">arrow_back</span>
+            </a>
+            @endif
+            <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center shadow-lg">
+                <span class="material-icons-outlined text-white text-lg">edit</span>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-800">
+                Edit Service
+            </h1>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="page-card rounded-2xl overflow-hidden p-8">
+        <form action="{{ route('admin.services.update', $service->id) }}" method="POST" class="space-y-6">
+            @csrf
+            @method('PUT')
+            @if(request('referrer'))
+            <input type="hidden" name="referrer" value="{{ request('referrer') }}">
+            @endif
+
+            <!-- Title -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Service Title</label>
+                <input type="text" name="title" required value="{{ $service->title }}"
+                    class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            </div>
+
+            <!-- Slug -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Slug</label>
+                <input type="text" name="slug" required value="{{ $service->slug }}"
+                    class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            </div>
+
+            <!-- Category -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Category</label>
+                <input type="text" name="category" value="{{ $service->category }}"
+                    class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            </div>
+
+            <!-- Excerpt -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Excerpt</label>
+                <textarea name="excerpt" rows="3"
+                    class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">{{ $service->excerpt }}</textarea>
+            </div>
+
+            <!-- Content -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Content</label>
+                <textarea name="content" id="content-editor"
+                    class="tinymce-editor w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all font-mono text-sm"
+                    rows="12">{{ $service->content }}</textarea>
+            </div>
+
+            <!-- Image -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Image URL</label>
+                <input type="text" name="image" value="{{ $service->image }}"
+                    class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                @if($service->image)
+                <div class="mt-2">
+                    <img src="{{ $service->image }}" alt="Preview" class="h-32 rounded-lg object-cover">
+                </div>
+                @endif
+            </div>
+
+            <!-- Stats -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Stats (Optional)</label>
+                <div class="grid grid-cols-2 gap-4">
+                    @if($service->stats)
+                    @foreach($service->stats as $index => $stat)
+                    <div>
+                        <input type="text" name="stats[{{ $index }}][value]" value="{{ $stat['value'] }}"
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        <input type="text" name="stats[{{ $index }}][label]" value="{{ $stat['label'] }}"
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2">
+                    </div>
+                    @endforeach
+                    @else
+                    <div>
+                        <input type="text" name="stats[0][value]"
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            placeholder="900+">
+                        <input type="text" name="stats[0][label]"
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2"
+                            placeholder="Label">
+                    </div>
+                    <div>
+                        <input type="text" name="stats[1][value]"
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            placeholder="45%">
+                        <input type="text" name="stats[1][label]"
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2"
+                            placeholder="Label">
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Featured -->
+            <div class="flex items-center gap-3">
+                <input type="checkbox" name="is_featured" id="is_featured" {{ $service->is_featured ? 'checked' : '' }} class="w-5 h-5 text-purple-600 rounded">
+                <label for="is_featured" class="text-sm font-semibold text-slate-700">Featured Service</label>
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Status</label>
+                <select name="status" class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all bg-white">
+                    <option value="draft" {{ $service->status === 'draft' ? 'selected' : '' }}>Draft</option>
+                    <option value="published" {{ $service->status === 'published' ? 'selected' : '' }}>Published</option>
+                </select>
+            </div>
+
+            <!-- Order -->
+            <div>
+                <label class="text-sm font-semibold text-slate-700 mb-2 block">Order</label>
+                <input type="number" name="order" value="{{ $service->order }}"
+                    class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            </div>
+
+            <!-- Submit -->
+            <div class="flex gap-4 pt-4">
+                @if(request('referrer'))
+                <a href="{{ request('referrer') }}" class="flex-1 py-3 px-6 rounded-xl border-2 border-slate-300 text-slate-600 font-semibold hover:bg-slate-50 transition-all text-center">
+                    Cancel
+                </a>
+                @else
+                <a href="{{ route('admin.services.index') }}" class="flex-1 py-3 px-6 rounded-xl border-2 border-slate-300 text-slate-600 font-semibold hover:bg-slate-50 transition-all text-center">
+                    Cancel
+                </a>
+                @endif
+                <button type="submit" class="flex-1 py-3 px-6 rounded-xl gradient-bg text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition-all">
+                    Update Service
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@endsection
+
+@push('scripts')
+<script>
+    function initTinyMCE() {
+        tinymce.init({
+            selector: '.tinymce-editor',
+            height: 400,
+            menubar: true,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Inter,sans-serif; font-size:16px }',
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save();
+                });
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initTinyMCE();
+    });
+</script>
+@endpush

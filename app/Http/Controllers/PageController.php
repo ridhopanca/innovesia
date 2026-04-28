@@ -180,6 +180,30 @@ class PageController extends Controller
     }
 
     /**
+     * Show service detail page
+     */
+    public function serviceDetail($slug)
+    {
+        $service = \App\Models\Service::where('slug', $slug)->published()->firstOrFail();
+        return view('pages.service', compact('service'));
+    }
+
+    /**
+     * Show product page with services
+     */
+    public function product()
+    {
+        $page = Page::where('slug', 'product')->firstOrFail();
+        $sections = $page->sections->mapWithKeys(function ($section) {
+            return [$section->type => $section->content ?? []];
+        });
+
+        $services = \App\Models\Service::published()->ordered()->get();
+
+        return view('pages.product', compact('page', 'sections', 'services'));
+    }
+
+    /**
      * Show contact page with form
      */
     public function contact()

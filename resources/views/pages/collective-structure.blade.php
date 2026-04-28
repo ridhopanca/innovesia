@@ -115,11 +115,11 @@
                     <p class="text-sm font-label uppercase font-bold tracking-widest text-primary mb-4">Lab Focus</p>
                     <ul class="space-y-3 text-on-surface-variant">
                         <li class="flex items-center gap-3">
-                            <span class="material-icons-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            <span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
                             {{ $sections['content']['lab_focus_1'] ?? 'Skill-building Workshops' }}
                         </li>
                         <li class="flex items-center gap-3">
-                            <span class="material-icons-outlined text-sm" data-icon="check_circle">check_circle</span>
+                            <span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
                             {{ $sections['content']['lab_focus_2'] ?? 'Ecosystem Networking' }}
                         </li>
                     </ul>
