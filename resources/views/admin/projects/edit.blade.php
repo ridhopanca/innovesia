@@ -33,6 +33,21 @@
             <input type="hidden" name="referrer" value="{{ request('referrer') }}">
             @endif
 
+            <!-- Validation Errors -->
+            @if($errors->any())
+            <div class="p-4 bg-red-50 border border-red-200 rounded-xl">
+                <div class="flex items-center gap-2 text-red-700 font-semibold mb-2">
+                    <span class="material-icons-outlined">error</span>
+                    <span>Validation Error</span>
+                </div>
+                <ul class="text-sm text-red-600 space-y-1">
+                    @foreach($errors->all() as $error)
+                    <li>• {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <!-- Title -->
             <div>
                 <label class="text-sm font-semibold text-slate-700 mb-2 block">Project Title</label>
@@ -83,33 +98,34 @@
 
             <!-- Stats -->
             <div>
-                <label class="text-sm font-semibold text-slate-700 mb-2 block">Stats (Optional)</label>
-                <div class="grid grid-cols-2 gap-4">
-                    @if($project->stats)
+                <div class="flex items-center justify-between mb-2">
+                    <label class="text-sm font-semibold text-slate-700">Stats (Optional)</label>
+                    <button type="button" onclick="addStat()" class="text-sm text-purple-600 hover:text-purple-800 font-medium flex items-center gap-1">
+                        <span class="material-icons-outlined text-sm">add</span> Add Stat
+                    </button>
+                </div>
+                <div id="stats-container" class="grid grid-cols-2 gap-4">
+                    @if($project->stats && count($project->stats) > 0)
                     @foreach($project->stats as $index => $stat)
-                    <div>
+                    <div class="stat-item">
                         <input type="text" name="stats[{{ $index }}][value]" value="{{ $stat['value'] }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            placeholder="Value">
                         <input type="text" name="stats[{{ $index }}][label]" value="{{ $stat['label'] }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2">
+                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2"
+                            placeholder="Label">
+                        <button type="button" onclick="removeStat(this)" class="text-xs text-red-500 hover:text-red-700 mt-1">Remove</button>
                     </div>
                     @endforeach
                     @else
-                    <div>
+                    <div class="stat-item">
                         <input type="text" name="stats[0][value]"
                             class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                             placeholder="900+">
                         <input type="text" name="stats[0][label]"
                             class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2"
                             placeholder="Label">
-                    </div>
-                    <div>
-                        <input type="text" name="stats[1][value]"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            placeholder="45%">
-                        <input type="text" name="stats[1][label]"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2"
-                            placeholder="Label">
+                        <button type="button" onclick="removeStat(this)" class="text-xs text-red-500 hover:text-red-700 mt-1">Remove</button>
                     </div>
                     @endif
                 </div>
@@ -181,6 +197,35 @@
                 });
             }
         });
+    }
+
+    // Stats management
+    let statIndex = `{{ ($project->stats && count($project->stats) > 0) ? count($project->stats) : 1 }}`;
+
+    function addStat() {
+        const container = document.getElementById('stats-container');
+        const div = document.createElement('div');
+        div.className = 'stat-item';
+        div.innerHTML = `
+            <input type="text" name="stats[${statIndex}][value]"
+                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                placeholder="Value">
+            <input type="text" name="stats[${statIndex}][label]"
+                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all mt-2"
+                placeholder="Label">
+            <button type="button" onclick="removeStat(this)" class="text-xs text-red-500 hover:text-red-700 mt-1">Remove</button>
+        `;
+        container.appendChild(div);
+        statIndex++;
+    }
+
+    function removeStat(btn) {
+        const items = document.querySelectorAll('.stat-item');
+        if (items.length > 1) {
+            btn.closest('.stat-item').remove();
+        } else {
+            alert('At least one stat is required');
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
