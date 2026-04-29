@@ -78,7 +78,16 @@ $publishedAt = $article['published_at'] ?? now()->format('d M Y');
 </div>
 
 <!-- Article Content -->
-<article class="prose prose-lg max-w-none prose-headings:text-primary prose-p:text-on-surface-variant prose-a:text-primary hover:prose-a:text-on-primary-container prose-strong:text-primary" data-animate="fade-up">
+<article class="prose prose-lg max-w-none
+    prose-headings:text-primary prose-headings:font-bold
+    prose-p:text-on-surface-variant prose-p:leading-relaxed
+    prose-a:text-blue-500 prose-a:underline hover:prose-a:text-blue-600
+    prose-strong:text-primary prose-strong:font-bold
+    prose-ul:list-disc prose-ul:pl-6 prose-ol:list-decimal prose-ol:pl-6
+    prose-li:text-on-surface-variant prose-li:marker:text-primary
+    prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-on-surface-variant
+    prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8
+    prose-hr:border-surface-container-high" data-animate="fade-up">
     {!! $content !!}
 </article>
 

@@ -26,10 +26,25 @@
 
     <!-- Form -->
     <div class="page-card rounded-2xl overflow-hidden p-8">
-        <form action="{{ route('admin.communities.store') }}" method="POST" class="space-y-6">
+        <form id="communityForm" action="{{ route('admin.communities.store') }}" method="POST" class="space-y-6">
             @csrf
             @if(request('referrer'))
             <input type="hidden" name="referrer" value="{{ request('referrer') }}">
+            @endif
+
+            <!-- Validation Errors -->
+            @if($errors->any())
+            <div class="p-4 bg-red-50 border border-red-200 rounded-xl">
+                <div class="flex items-center gap-2 text-red-700 font-semibold mb-2">
+                    <span class="material-icons-outlined">error</span>
+                    <span>Validation Error</span>
+                </div>
+                <ul class="text-sm text-red-600 space-y-1">
+                    @foreach($errors->all() as $error)
+                    <li>• {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
 
             <!-- Title -->
@@ -40,13 +55,8 @@
                     placeholder="Enter community title">
             </div>
 
-            <!-- Slug -->
-            <div>
-                <label class="text-sm font-semibold text-slate-700 mb-2 block">Slug</label>
-                <input type="text" name="slug" required
-                    class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                    placeholder="community-slug">
-            </div>
+            <!-- Slug (Hidden) -->
+            <input type="hidden" name="slug" id="slug" value="">
 
             <!-- Badge -->
             <div>
@@ -337,7 +347,7 @@
         Cancel
     </a>
     @endif
-    <button type="submit" class="flex-1 py-3 px-6 rounded-xl gradient-bg text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition-all">
+    <button type="button" id="submitBtn" class="flex-1 py-3 px-6 rounded-xl gradient-bg text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition-all">
         Create Community
     </button>
 </div>
@@ -346,3 +356,33 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    (function() {
+        const titleInput = document.querySelector('input[name="title"]');
+        const slugInput = document.getElementById('slug');
+        const form = document.getElementById('communityForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function generateSlug(text) {
+            if (!text) return '';
+            return text.toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '')
+                .substring(0, 100);
+        }
+
+        if (form && submitBtn && titleInput) {
+            submitBtn.addEventListener('click', function() {
+                if (titleInput.value.trim()) {
+                    slugInput.value = generateSlug(titleInput.value.trim());
+                }
+                form.submit();
+            });
+        }
+    })();
+</script>
+@endpush

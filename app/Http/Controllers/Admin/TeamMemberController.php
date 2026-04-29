@@ -24,6 +24,7 @@ class TeamMemberController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'role' => 'nullable|string|max:255',
+            'slug' => 'nullable|string|max:255',
             'bio' => 'nullable|string',
             'image' => 'nullable|string',
             'category' => 'nullable|string|max:255',
@@ -32,6 +33,7 @@ class TeamMemberController extends Controller
         ]);
 
         $validated['order'] = $validated['order'] ?? 0;
+        $validated['is_featured'] = $request->has('is_featured');
 
         TeamMember::create($validated);
 
@@ -60,6 +62,7 @@ class TeamMemberController extends Controller
         ]);
 
         $validated['order'] = $validated['order'] ?? 0;
+        $validated['is_featured'] = $request->has('is_featured');
 
         $teamMember->update($validated);
 

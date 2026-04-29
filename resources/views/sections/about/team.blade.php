@@ -1,3 +1,10 @@
+@php
+// Get featured team members from database
+$featuredMembers = \App\Models\TeamMember::published()->featured()->ordered()->limit(4)->get();
+
+// Fallback to section data if no featured members in DB
+$members = $featuredMembers->isNotEmpty() ? $featuredMembers : ($data['members'] ?? []);
+@endphp
 <section class="py-16 md:py-32 bg-surface">
     <div class="max-w-7xl mx-auto px-4 md:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end gap-6 md:gap-8 mb-12 md:mb-20" data-animate="fade-up">
@@ -16,13 +23,13 @@
             @endif
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12" data-animate="stagger">
-            @foreach(($data['members'] ?? []) as $member)
+            @foreach($members as $member)
             <div class="group">
                 <div class="aspect-[4/5] bg-surface-container rounded-xl overflow-hidden mb-4 md:mb-6">
-                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" src="{{ $member['image'] ?? '' }}" alt="{{ $member['name'] ?? '' }}" />
+                    <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" src="{{ $member['image'] ?? ($member->image ?? '') }}" alt="{{ $member['name'] ?? ($member->name ?? '') }}" />
                 </div>
-                <h4 class="text-lg md:text-xl font-bold font-headline mb-1">{{ $member['name'] ?? '' }}</h4>
-                <p class="text-primary font-medium text-xs md:text-sm mb-4">{{ $member['role'] ?? '' }}</p>
+                <h4 class="text-lg md:text-xl font-bold font-headline mb-1">{{ $member['name'] ?? $member->name }}</h4>
+                <p class="text-primary font-medium text-xs md:text-sm mb-4">{{ $member['role'] ?? $member->role }}</p>
             </div>
             @endforeach
         </div>

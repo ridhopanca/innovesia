@@ -29,7 +29,6 @@ class ServiceController extends Controller
             'content' => 'nullable|string',
             'image' => 'nullable|string',
             'stats' => 'nullable|array',
-            'is_featured' => 'nullable|boolean',
             'status' => 'required|in:draft,published',
             'order' => 'nullable|integer'
         ]);
@@ -61,7 +60,6 @@ class ServiceController extends Controller
             'content' => 'nullable|string',
             'image' => 'nullable|string',
             'stats' => 'nullable|array',
-            'is_featured' => 'nullable|boolean',
             'status' => 'required|in:draft,published',
             'order' => 'nullable|integer'
         ]);

@@ -86,149 +86,151 @@ $isPublished = !empty($section->content);
                 rows="2">{{ $data['capabilities_subtitle'] ?? 'Our core disciplines are designed to address the multifaceted nature of contemporary business and social ecosystems.' }}</textarea>
         </div>
 
-        <!-- Capability 1 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 1 Title</label>
-            <input type="text" name="capability_1_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_1_title'] ?? 'Design Research' }}">
+        <!-- Dynamic Capabilities -->
+        <div class="border-t border-slate-200 pt-6 mt-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <span class="material-icons-outlined text-purple-600">psychology</span>
+                    Capabilities
+                </h3>
+            </div>
+
+            <div id="capabilities-container" class="space-y-4">
+                @php
+                $capabilities = $data['capabilities'] ?? [];
+                // Migrate old flat data to array if needed
+                if (empty($capabilities) && isset($data['capability_1_title'])) {
+                for ($i = 1; $i <= 9; $i++) {
+                    if (!empty($data["capability_{$i}_title"])) {
+                    $capabilities[]=[ 'icon'=> $data["capability_{$i}_icon"] ?? 'star',
+                    'title' => $data["capability_{$i}_title"],
+                    'description' => $data["capability_{$i}_description"] ?? '',
+                    'visible_in_home' => false
+                    ];
+                    }
+                    }
+                    }
+                    @endphp
+
+                    @forelse($capabilities as $index => $capability)
+                    <div class="capability-item border border-slate-200 rounded-xl bg-slate-50 p-4" data-index="{{ $index }}">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-semibold text-slate-700">Capability {{ $index + 1 }}</span>
+                            <button type="button" onclick="removeCapability(this)"
+                                class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-colors">
+                                <span class="material-icons-outlined text-base">delete</span>
+                            </button>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" name="capabilities[{{ $index }}][icon]" value="{{ $capability['icon'] ?? 'star' }}"
+                                    class="border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                    placeholder="Icon (e.g., search)">
+                                <input type="text" name="capabilities[{{ $index }}][title]" value="{{ $capability['title'] ?? '' }}"
+                                    class="border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                    placeholder="Title">
+                            </div>
+                            <textarea name="capabilities[{{ $index }}][description]" rows="2"
+                                class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="Description">{{ $capability['description'] ?? '' }}</textarea>
+
+                            <!-- Visible in Home Toggle -->
+                            <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-200">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-icons-outlined text-slate-500 text-sm">home</span>
+                                    <span class="text-sm font-medium text-slate-700">Tampilkan di Beranda</span>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" name="capabilities[{{ $index }}][visible_in_home]" class="sr-only peer"
+                                        {{ ($capability['visible_in_home'] ?? false) ? 'checked' : '' }}>
+                                    <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-purple-600"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="text-center py-8 text-slate-500 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                        <span class="material-icons-outlined text-3xl mb-2 block">add_circle_outline</span>
+                        <p class="text-sm">No capabilities yet. Click "Add Capability" to start.</p>
+                    </div>
+                    @endforelse
+            </div>
+
+            <button type="button" onclick="addCapability()"
+                class="w-full mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
+                <span class="material-icons-outlined text-sm">add</span>
+                Add Capability
+            </button>
         </div>
 
-        <!-- Capability 1 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 1 Description</label>
-            <textarea name="capability_1_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_1_description'] ?? 'Deep-dive ethnographic studies and trend analysis to uncover the \'why\' behind user behaviors and market shifts.' }}</textarea>
-        </div>
+        <script>
+            function addCapability() {
+                const container = document.getElementById('capabilities-container');
+                const items = container.querySelectorAll('.capability-item');
+                const index = items.length;
 
-        <!-- Capability 2 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 2 Title</label>
-            <input type="text" name="capability_2_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_2_title'] ?? 'Innovation Strategy' }}">
-        </div>
+                // Remove empty state if exists
+                const emptyState = container.querySelector('.text-center');
+                if (emptyState) emptyState.remove();
 
-        <!-- Capability 2 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 2 Description</label>
-            <textarea name="capability_2_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_2_description'] ?? 'Developing long-term roadmaps that align business objectives with emerging opportunities and disruptive technologies.' }}</textarea>
-        </div>
+                const div = document.createElement('div');
+                div.className = 'capability-item border border-slate-200 rounded-xl bg-slate-50 p-4';
+                div.setAttribute('data-index', index);
+                div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-semibold text-slate-700">Capability ${index + 1}</span>
+                        <button type="button" onclick="removeCapability(this)"
+                            class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-colors">
+                            <span class="material-icons-outlined text-sm">delete</span>
+                        </button>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" name="capabilities[${index}][icon]"
+                                class="border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="Icon (e.g., search)">
+                            <input type="text" name="capabilities[${index}][title]"
+                                class="border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="Title">
+                        </div>
+                        <textarea name="capabilities[${index}][description]" rows="2"
+                            class="w-full border border-slate-300 p-2 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            placeholder="Description"></textarea>
 
-        <!-- Capability 3 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 3 Title</label>
-            <input type="text" name="capability_3_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_3_title'] ?? 'Human-Centered Design' }}">
-        </div>
+                        <!-- Visible in Home Toggle -->
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-slate-200">
+                            <div class="flex items-center gap-2">
+                                <span class="material-icons-outlined text-slate-500 text-sm">home</span>
+                                <span class="text-sm font-medium text-slate-700">Tampilkan di Beranda</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="capabilities[${index}][visible_in_home]" class="sr-only peer">
+                                <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-purple-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            }
 
-        <!-- Capability 3 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 3 Description</label>
-            <textarea name="capability_3_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_3_description'] ?? 'Prioritizing human needs and experiences at every stage of the design process to ensure resonant, intuitive solutions.' }}</textarea>
-        </div>
-
-        <!-- Capability 4 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 4 Title</label>
-            <input type="text" name="capability_4_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_4_title'] ?? 'Design Thinking Workshop' }}">
-        </div>
-
-        <!-- Capability 4 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 4 Description</label>
-            <textarea name="capability_4_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_4_description'] ?? 'Expertly moderated sessions that foster collaborative problem-solving and rapid ideation across diverse teams.' }}</textarea>
-        </div>
-
-        <!-- Capability 5 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 5 Title</label>
-            <input type="text" name="capability_5_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_5_title'] ?? 'InnoVocation Lab' }}">
-        </div>
-
-        <!-- Capability 5 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 5 Description</label>
-            <textarea name="capability_5_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_5_description'] ?? 'A specialized sandbox for prototyping and testing high-risk, high-reward concepts in a controlled, creative environment.' }}</textarea>
-        </div>
-
-        <!-- Capability 6 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 6 Title</label>
-            <input type="text" name="capability_6_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_6_title'] ?? 'Public Sector & Policy' }}">
-        </div>
-
-        <!-- Capability 6 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 6 Description</label>
-            <textarea name="capability_6_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_6_description'] ?? 'Applying innovation methodologies to civic challenges, governance systems, and complex policy development frameworks.' }}</textarea>
-        </div>
-
-        <!-- Capability 7 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 7 Title</label>
-            <input type="text" name="capability_7_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_7_title'] ?? 'Digital & Platform' }}">
-        </div>
-
-        <!-- Capability 7 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 7 Description</label>
-            <textarea name="capability_7_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_7_description'] ?? 'Building resilient digital architectures and seamless platform experiences that scale with user growth and technical complexity.' }}</textarea>
-        </div>
-
-        <!-- Capability 8 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 8 Title</label>
-            <input type="text" name="capability_8_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_8_title'] ?? 'Insightism (Data Analysis)' }}">
-        </div>
-
-        <!-- Capability 8 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 8 Description</label>
-            <textarea name="capability_8_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_8_description'] ?? 'Synthesizing quantitative data with qualitative insights to create a comprehensive view of performance and potential.' }}</textarea>
-        </div>
-
-        <!-- Capability 9 Title -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 9 Title</label>
-            <input type="text" name="capability_9_title"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                value="{{ $data['capability_9_title'] ?? 'Program & Ecosystem' }}">
-        </div>
-
-        <!-- Capability 9 Description -->
-        <div>
-            <label class="text-sm font-semibold text-slate-700 mb-2 block">Capability 9 Description</label>
-            <textarea name="capability_9_description"
-                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                rows="3">{{ $data['capability_9_description'] ?? 'Orchestrating broad networks of stakeholders to drive systemic change and sustainable community-led innovation.' }}</textarea>
-        </div>
+            function removeCapability(btn) {
+                const item = btn.closest('.capability-item');
+                item.remove();
+                // Re-index remaining items
+                const items = document.querySelectorAll('.capability-item');
+                items.forEach((item, idx) => {
+                    item.setAttribute('data-index', idx);
+                    item.querySelector('.text-sm.font-semibold').textContent = `Capability ${idx + 1}`;
+                    // Update input names
+                    item.querySelectorAll('input, textarea').forEach(input => {
+                        const name = input.getAttribute('name');
+                        if (name) {
+                            input.setAttribute('name', name.replace(/capabilities\[\d+\]/, `capabilities[${idx}]`));
+                        }
+                    });
+                });
+            }
+        </script>
 
         <!-- Why It Matters Title -->
         <div>

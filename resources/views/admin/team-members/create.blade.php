@@ -20,7 +20,7 @@
 
     <!-- Form -->
     <div class="page-card rounded-2xl overflow-hidden p-8">
-        <form action="{{ route('admin.team-members.store') }}" method="POST" class="space-y-6">
+        <form id="teamMemberForm" action="{{ route('admin.team-members.store') }}" method="POST" class="space-y-6">
             @csrf
             <input type="hidden" name="referrer" value="{{ request()->query('referrer') }}">
 
@@ -31,6 +31,9 @@
                     class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                     placeholder="Enter name">
             </div>
+
+            <!-- Slug (Hidden) -->
+            <input type="hidden" name="slug" id="slug" value="">
 
             <!-- Role -->
             <div>
@@ -64,11 +67,23 @@
                     placeholder="https://example.com/image.jpg">
             </div>
 
+            <!-- Show in Who We Are -->
+            <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div>
+                    <label class="text-sm font-semibold text-slate-700 block">Tampilkan di Menu Who We Are</label>
+                    <p class="text-xs text-slate-500 mt-1">Hidupkan untuk menampilkan di section who we are page</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" name="is_featured" class="sr-only peer">
+                    <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                </label>
+            </div>
+
             <!-- Status -->
             <div>
                 <label class="text-sm font-semibold text-slate-700 mb-2 block">Status</label>
                 <select name="status" class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all bg-white">
-                    <option value="draft">Draft</option>
+                    <option value="draft" selected>Draft</option>
                     <option value="published">Published</option>
                 </select>
             </div>
@@ -85,7 +100,7 @@
                 <a href="{{ request()->query('referrer') ?? route('admin.team-members.index') }}" class="flex-1 py-3 px-6 rounded-xl border-2 border-slate-300 text-slate-600 font-semibold hover:bg-slate-50 transition-all text-center">
                     Cancel
                 </a>
-                <button type="submit" class="flex-1 py-3 px-6 rounded-xl gradient-bg text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition-all">
+                <button type="button" id="submitBtn" class="flex-1 py-3 px-6 rounded-xl gradient-bg text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition-all">
                     Create Team Member
                 </button>
             </div>
@@ -94,3 +109,33 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    (function() {
+        const nameInput = document.querySelector('input[name="name"]');
+        const slugInput = document.getElementById('slug');
+
+        function generateSlug(text) {
+            if (!text) return '';
+            return text.toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '')
+                .substring(0, 100);
+        }
+
+        const form = document.getElementById('teamMemberForm');
+        const submitBtn = document.getElementById('submitBtn');
+        if (form && submitBtn && nameInput) {
+            submitBtn.addEventListener('click', function() {
+                if (nameInput.value.trim()) {
+                    slugInput.value = generateSlug(nameInput.value.trim());
+                }
+                form.submit();
+            });
+        }
+    })();
+</script>
+@endpush

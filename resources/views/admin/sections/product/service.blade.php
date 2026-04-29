@@ -55,35 +55,21 @@ $isPublished = !empty($section->content);
                 rows="3">{{ $data['description'] ?? '' }}</textarea>
         </div>
 
-        <!-- Services -->
-        <div class="space-y-4">
-            <h3 class="font-semibold text-slate-700">Services</h3>
-            @foreach(($data['services'] ?? []) as $index => $service)
-            <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
-                <div class="space-y-3">
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Icon</label>
-                        <input type="text" name="services[{{ $index }}][icon]"
-                            value="{{ $service['icon'] ?? '' }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Title</label>
-                        <input type="text" name="services[{{ $index }}][title]"
-                            value="{{ $service['title'] ?? '' }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Description</label>
-                        <textarea name="services[{{ $index }}][description]"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            rows="3">{{ $service['description'] ?? '' }}</textarea>
-                    </div>
+        <!-- Auto-fetch Info -->
+        <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
+            <div class="flex items-start gap-3">
+                <span class="material-icons-outlined text-indigo-600">auto_awesome</span>
+                <div>
+                    <h4 class="text-sm font-semibold text-indigo-900">Services Otomatis dari Database</h4>
+                    <p class="text-xs text-indigo-700 mt-1">
+                        Section ini menampilkan services secara otomatis dari database.<br>
+                        • Data diambil dari menu <strong>Services</strong><br>
+                        • Hanya services dengan status <strong>Published</strong> yang ditampilkan<br>
+                        • Layout otomatis menyesuaikan jumlah services<br><br>
+                        Kelola services di menu <a href="/cms/services" class="font-semibold underline hover:text-indigo-900">Services</a>.
+                    </p>
                 </div>
             </div>
-            @endforeach
         </div>
 
     </form>

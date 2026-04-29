@@ -14,12 +14,22 @@ class TeamMember extends Model
         'image',
         'category',
         'order',
-        'status'
+        'status',
+        'is_featured'
+    ];
+
+    protected $casts = [
+        'is_featured' => 'boolean',
     ];
 
     public function scopePublished($query)
     {
         return $query->where('status', 'published');
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
     }
 
     public function scopeOrdered($query)

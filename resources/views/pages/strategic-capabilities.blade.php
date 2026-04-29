@@ -43,69 +43,28 @@
             <div class="hidden md:block h-[2px] flex-grow bg-outline-variant/30 mb-6 mx-12"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Card 1 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="search">search</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_1_title'] ?? "Design Research" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_1_description'] ?? "Deep-dive ethnographic studies and trend analysis to uncover the 'why' behind user behaviors and market shifts." }}</p>
-            </div>
-            <!-- Card 2 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="architecture">architecture</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_2_title'] ?? "Innovation Strategy" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_2_description'] ?? "Developing long-term roadmaps that align business objectives with emerging opportunities and disruptive technologies." }}</p>
-            </div>
-            <!-- Card 3 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="diversity_3">diversity_3</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_3_title'] ?? "Human-Centered Design" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_3_description'] ?? "Prioritizing human needs and experiences at every stage of the design process to ensure resonant, intuitive solutions." }}</p>
-            </div>
-            <!-- Card 4 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="groups">groups</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_4_title'] ?? "Design Thinking Workshop" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_4_description'] ?? "Expertly moderated sessions that foster collaborative problem-solving and rapid ideation across diverse teams." }}</p>
-            </div>
-            <!-- Card 5 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="science">science</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_5_title'] ?? "InnoVocation Lab" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_5_description'] ?? "A specialized sandbox for prototyping and testing high-risk, high-reward concepts in a controlled, creative environment." }}</p>
-            </div>
-            <!-- Card 6 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="account_balance">account_balance</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_6_title'] ?? "Public Sector &amp; Policy" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_6_description'] ?? "Applying innovation methodologies to civic challenges, governance systems, and complex policy development frameworks." }}</p>
-            </div>
-            <!-- Card 7 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="developer_mode">developer_mode</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_7_title'] ?? "Digital &amp; Platform" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_7_description'] ?? "Building resilient digital architectures and seamless platform experiences that scale with user growth and technical complexity." }}</p>
-            </div>
-            <!-- Card 8 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="query_stats">query_stats</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_8_title'] ?? "Insightism (Data Analysis)" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_8_description'] ?? "Synthesizing quantitative data with qualitative insights to create a comprehensive view of performance and potential." }}</p>
-            </div>
-            <!-- Card 9 -->
-            <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
-                <span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="hub">hub</span>
-                <h3 class="text-xl font-bold text-primary mb-3">{{ $sections['content']['capability_9_title'] ?? "Program &amp; Ecosystem" }}</h3>
-                <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
-                <p class="text-on-surface-variant leading-relaxed">{{ $sections['content']['capability_9_description'] ?? "Orchestrating broad networks of stakeholders to drive systemic change and sustainable community-led innovation." }}</p>
-            </div>
+            @php
+            $capabilities = $sections['content']['capabilities'] ?? [];
+            // Migrate old flat data if needed
+            if (empty($capabilities)) {
+            for ($i = 1; $i <= 9; $i++) {
+                if (!empty($sections['content']["capability_{$i}_title"])) {
+                $capabilities[]=[ 'icon'=> $sections['content']["capability_{$i}_icon"] ?? 'star',
+                'title' => $sections['content']["capability_{$i}_title"],
+                'description' => $sections['content']["capability_{$i}_description"] ?? ''
+                ];
+                }
+                }
+                }
+                @endphp
+                @foreach($capabilities as $capability)
+                <div class="bg-surface-container-lowest p-8 rounded-lg group hover:translate-y-[-8px] transition-all duration-500 shadow-[0_20px_40px_rgba(0,30,64,0.04)]">
+                    <span class="material-symbols-outlined text-4xl text-primary mb-6">{{ $capability['icon'] ?? 'star' }}</span>
+                    <h3 class="text-xl font-bold text-primary mb-3">{{ $capability['title'] }}</h3>
+                    <div class="w-12 h-[1px] bg-primary/20 mb-4 transition-all group-hover:w-full"></div>
+                    <p class="text-on-surface-variant leading-relaxed">{{ $capability['description'] }}</p>
+                </div>
+                @endforeach
         </div>
     </div>
 </section>

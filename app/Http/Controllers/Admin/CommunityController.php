@@ -43,7 +43,6 @@ class CommunityController extends Controller
             'cta_description' => 'nullable|string',
             'cta_primary_button' => 'nullable|string|max:255',
             'cta_secondary_button' => 'nullable|string|max:255',
-            'is_featured' => 'nullable|boolean',
             'status' => 'required|in:draft,published',
             'order' => 'nullable|integer'
         ]);
@@ -89,7 +88,6 @@ class CommunityController extends Controller
             'cta_description' => 'nullable|string',
             'cta_primary_button' => 'nullable|string|max:255',
             'cta_secondary_button' => 'nullable|string|max:255',
-            'is_featured' => 'nullable|boolean',
             'status' => 'required|in:draft,published',
             'order' => 'nullable|integer'
         ]);

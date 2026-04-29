@@ -63,35 +63,19 @@ $isPublished = !empty($section->content);
                 value="{{ $data['button_text'] ?? '' }}">
         </div>
 
-        <!-- Team Members -->
-        <div class="space-y-4">
-            <h3 class="font-semibold text-slate-700">Team Members</h3>
-            @foreach(($data['members'] ?? []) as $index => $member)
-            <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
-                <div class="space-y-3">
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Nama</label>
-                        <input type="text" name="members[{{ $index }}][name]"
-                            value="{{ $member['name'] ?? '' }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Role</label>
-                        <input type="text" name="members[{{ $index }}][role]"
-                            value="{{ $member['role'] ?? '' }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                    </div>
-
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Image</label>
-                        <input type="text" name="members[{{ $index }}][image]"
-                            value="{{ $member['image'] ?? '' }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                    </div>
+        <!-- Auto-fetch Info -->
+        <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
+            <div class="flex items-start gap-3">
+                <span class="material-icons-outlined text-indigo-600">auto_awesome</span>
+                <div>
+                    <h4 class="text-sm font-semibold text-indigo-900">Team Members Otomatis dari Database</h4>
+                    <p class="text-xs text-indigo-700 mt-1">
+                        Section ini menampilkan maksimal 4 team members secara otomatis:<br>
+                        • <strong>Featured:</strong> Team member yang diaktifkan "Tampilkan di Menu Who We Are"<br>
+                        Kelola team members di menu <a href="{{ route('admin.team-members.index') }}" class="font-semibold underline hover:text-indigo-900">Team Members</a>.
+                    </p>
                 </div>
             </div>
-            @endforeach
         </div>
 
     </form>

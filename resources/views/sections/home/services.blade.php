@@ -1,9 +1,26 @@
 @php
-$services = $data['services'] ?? [
+// Get capabilities from strategic-capabilities page that are visible in home
+$strategicCapabilitiesPage = \App\Models\Page::where('slug', 'strategic-capabilities')->first();
+$capabilities = [];
+if ($strategicCapabilitiesPage) {
+$contentSection = $strategicCapabilitiesPage->sections->where('type', 'content')->first();
+if ($contentSection) {
+$sectionData = $contentSection->draft_content ?? $contentSection->content ?? [];
+$allCapabilities = $sectionData['capabilities'] ?? [];
+// Filter only visible in home, take up to 3
+$capabilities = array_slice(array_filter($allCapabilities, function($cap) {
+return ($cap['visible_in_home'] ?? false) === true;
+}), 0, 3);
+}
+}
+// Fallback if no capabilities found
+if (empty($capabilities)) {
+$capabilities = [
 ['icon' => 'biotech', 'title' => 'Design Research', 'description' => "Deep ethnographic studies and behavioral analysis to uncover the 'why' behind user actions."],
 ['icon' => 'strategy', 'title' => 'Innovation Strategy', 'description' => 'Future-proofing your organization with scalable innovation frameworks and roadmaps.'],
 ['icon' => 'co_present', 'title' => 'Human-Centered Design', 'description' => 'Creating digital and physical products that resonate with real people in real contexts.']
 ];
+}
 @endphp
 <section class="py-16 md:py-32">
     <div class="max-w-7xl mx-auto px-4 md:px-8">
@@ -18,13 +35,13 @@ $services = $data['services'] ?? [
             </a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8" data-animate="stagger">
-            @foreach($services as $service)
+            @foreach($capabilities as $capability)
             <div class="group p-6 md:p-10 bg-surface-container-lowest rounded-2xl hover:bg-primary transition-all duration-500">
                 <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center mb-6 md:mb-8 group-hover:bg-on-primary-container transition-colors">
-                    <span class="material-symbols-outlined text-primary group-hover:text-white">{{ $service['icon'] }}</span>
+                    <span class="material-symbols-outlined text-primary group-hover:text-white">{{ $capability['icon'] ?? 'star' }}</span>
                 </div>
-                <h3 class="text-xl md:text-2xl font-bold font-headline text-primary mb-4 group-hover:text-white">{{ $service['title'] }}</h3>
-                <p class="text-on-surface-variant group-hover:text-white/80 leading-relaxed mb-6">{{ $service['description'] }}</p>
+                <h3 class="text-xl md:text-2xl font-bold font-headline text-primary mb-4 group-hover:text-white">{{ $capability['title'] }}</h3>
+                <p class="text-on-surface-variant group-hover:text-white/80 leading-relaxed mb-6">{{ $capability['description'] }}</p>
                 <div class="h-px w-full bg-outline-variant/20 group-hover:bg-white/20"></div>
             </div>
             @endforeach

@@ -22,7 +22,7 @@
 	<link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
 	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@300..700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-	<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+	<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 	<script id="tailwind-config">

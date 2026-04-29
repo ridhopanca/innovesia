@@ -66,7 +66,7 @@ $isPublished = !empty($section->content);
         <!-- Services -->
         <div class="space-y-4">
             <h3 class="font-semibold text-slate-700">Services</h3>
-            @foreach(($data['services'] ?? []) as $index => $service)
+            <!-- @foreach(($data['services'] ?? []) as $index => $service)
             <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
                 <div class="space-y-3">
                     <div>
@@ -91,7 +91,20 @@ $isPublished = !empty($section->content);
                     </div>
                 </div>
             </div>
-            @endforeach
+            @endforeach -->
+            <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
+                <div class="flex items-start gap-3">
+                    <span class="material-icons-outlined text-indigo-600">auto_awesome</span>
+                    <div>
+                        <h4 class="text-sm font-semibold text-indigo-900">Strategic Capabilities Otomatis dari Database</h4>
+                        <p class="text-xs text-indigo-700 mt-1">
+                            Section ini menampilkan strategic capabilities secara otomatis:<br>
+                            • <strong>Strategic capabilities</strong> akan muncul dihalaman utama apabila memilih / klik checkbox "Tampilkan dari beranda"<br>
+                            Kelola strategic capabilities di menu <a href="/cms/pages/strategic-capabilities" class="font-semibold underline hover:text-indigo-900">Strategic Capabilities</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </form>
