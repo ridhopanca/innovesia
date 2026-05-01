@@ -7,10 +7,10 @@ $contentSection = $strategicCapabilitiesPage->sections->where('type', 'content')
 if ($contentSection) {
 $sectionData = $contentSection->draft_content ?? $contentSection->content ?? [];
 $allCapabilities = $sectionData['capabilities'] ?? [];
-// Filter only visible in home, take up to 3
-$capabilities = array_slice(array_filter($allCapabilities, function($cap) {
-return ($cap['visible_in_home'] ?? false) === true;
-}), 0, 3);
+// Filter only visible in home
+$capabilities = array_filter($allCapabilities, function($cap) {
+return ($cap['visible_in_home'] ?? false) === true || ($cap['visible_in_home'] ?? false) === 'on';
+});
 }
 }
 // Fallback if no capabilities found

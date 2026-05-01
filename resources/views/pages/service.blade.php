@@ -31,8 +31,8 @@
 <!-- Visual Anchor -->
 @if($service->image)
 <section class="px-8 md:px-16">
-    <div class="max-w-7xl mx-auto rounded-xl overflow-hidden shadow-2xl h-[500px]">
-        <img alt="{{ $service->title }}" class="w-full h-full object-cover" src="{{ $service->image }}" />
+    <div class="max-w-7xl mx-auto rounded-xl overflow-hidden shadow-2xl h-full">
+        <img alt="{{ $service->title }}" class="w-full h-full object-contain" src="{{ $service->image }}" />
     </div>
 </section>
 @endif

@@ -49,34 +49,121 @@ $isPublished = !empty($section->content);
 
         <!-- Milestones -->
         <div class="space-y-4">
-            <h3 class="font-semibold text-slate-700">Milestones</h3>
-            @foreach(($data['milestones'] ?? []) as $index => $milestone)
-            <div class="border border-slate-200 p-4 rounded-xl bg-slate-50">
-                <div class="space-y-3">
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Tahun</label>
-                        <input type="text" name="milestones[{{ $index }}][year]"
-                            value="{{ $milestone['year'] ?? '' }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-                    </div>
+            <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-slate-700">Milestones</h3>
+            </div>
 
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Title</label>
-                        <input type="text" name="milestones[{{ $index }}][title]"
-                            value="{{ $milestone['title'] ?? '' }}"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+            <div id="milestones-container" class="space-y-4">
+                @forelse(($data['milestones'] ?? []) as $index => $milestone)
+                <div class="milestone-item border border-slate-200 p-4 rounded-xl bg-slate-50" data-index="{{ $index }}">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-semibold text-slate-700">Milestone {{ $index + 1 }}</span>
+                        <button type="button" onclick="removeMilestone(this)"
+                            class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-colors">
+                            <span class="material-icons-outlined text-base">delete</span>
+                        </button>
                     </div>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-sm font-medium text-slate-600 mb-1 block">Tahun</label>
+                            <input type="text" name="milestones[{{ $index }}][year]"
+                                value="{{ $milestone['year'] ?? '' }}"
+                                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
 
-                    <div>
-                        <label class="text-sm font-medium text-slate-600 mb-1 block">Description</label>
-                        <textarea name="milestones[{{ $index }}][description]"
-                            class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-                            rows="3">{{ $milestone['description'] ?? '' }}</textarea>
+                        <div>
+                            <label class="text-sm font-medium text-slate-600 mb-1 block">Title</label>
+                            <input type="text" name="milestones[{{ $index }}][title]"
+                                value="{{ $milestone['title'] ?? '' }}"
+                                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium text-slate-600 mb-1 block">Description</label>
+                            <textarea name="milestones[{{ $index }}][description]"
+                                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                rows="3">{{ $milestone['description'] ?? '' }}</textarea>
+                        </div>
                     </div>
                 </div>
+                @empty
+                <div class="text-center py-8 text-slate-500 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                    <span class="material-icons-outlined text-3xl mb-2 block">add_circle_outline</span>
+                    <p class="text-sm">No milestones yet. Click "Add Milestone" to start.</p>
+                </div>
+                @endforelse
             </div>
-            @endforeach
+
+            <button type="button" onclick="addMilestone()"
+                class="w-full px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
+                <span class="material-icons-outlined text-sm">add</span>
+                Add Milestone
+            </button>
         </div>
+
+        <script>
+            function addMilestone() {
+                const container = document.getElementById('milestones-container');
+                const items = container.querySelectorAll('.milestone-item');
+                const index = items.length;
+
+                // Remove empty state if exists
+                const emptyState = container.querySelector('.text-center');
+                if (emptyState) emptyState.remove();
+
+                const div = document.createElement('div');
+                div.className = 'milestone-item border border-slate-200 p-4 rounded-xl bg-slate-50';
+                div.setAttribute('data-index', index);
+                div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-semibold text-slate-700">Milestone ${index + 1}</span>
+                        <button type="button" onclick="removeMilestone(this)"
+                            class="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-colors">
+                            <span class="material-icons-outlined text-sm">delete</span>
+                        </button>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-sm font-medium text-slate-600 mb-1 block">Tahun</label>
+                            <input type="text" name="milestones[${index}][year]"
+                                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium text-slate-600 mb-1 block">Title</label>
+                            <input type="text" name="milestones[${index}][title]"
+                                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium text-slate-600 mb-1 block">Description</label>
+                            <textarea name="milestones[${index}][description]"
+                                class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                rows="3"></textarea>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            }
+
+            function removeMilestone(btn) {
+                const item = btn.closest('.milestone-item');
+                item.remove();
+                // Re-index remaining items
+                const items = document.querySelectorAll('.milestone-item');
+                items.forEach((item, idx) => {
+                    item.setAttribute('data-index', idx);
+                    item.querySelector('.text-sm.font-semibold').textContent = `Milestone ${idx + 1}`;
+                    // Update input names
+                    item.querySelectorAll('input, textarea').forEach(input => {
+                        const name = input.getAttribute('name');
+                        if (name) {
+                            input.setAttribute('name', name.replace(/milestones\[\d+\]/, `milestones[${idx}]`));
+                        }
+                    });
+                });
+            }
+        </script>
 
     </form>
 </div>

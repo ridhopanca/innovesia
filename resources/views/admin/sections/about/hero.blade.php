@@ -41,7 +41,8 @@ $isPublished = !empty($section->content);
 
         <!-- Badge -->
         <div>
-            value="{{ $data['badge'] ?? '' }}">
+            <label for="badge-{{ $section->id }}" class="text-sm font-semibold text-slate-700 mb-2 block">Badge</label>
+            <input type="text" id="badge-{{ $section->id }}" name="badge" value="{{ $data['badge'] ?? '' }}" class="w-full border border-slate-300 p-3 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all" placeholder="Badge" />
         </div>
 
         <!-- Title -->
